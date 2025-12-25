@@ -5,12 +5,15 @@
 # OCCT checkout + build
 occt/
 build-occt/
+compile_commands.json
 
 # generated maps (keep .md/.json if you want to commit them)
 notes/maps/*.dot
+notes/maps/*.dot.*
 notes/maps/*.svg
 notes/maps/cmake-targets.dot
 notes/maps/cmake-targets.svg
+notes/maps/*.dependers
 
 # misc
 .DS_Store

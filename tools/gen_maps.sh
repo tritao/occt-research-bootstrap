@@ -18,11 +18,8 @@ echo "[maps] 3) CMake target graph (toolkits + full)"
 cmake --graphviz="$OUT_DIR/cmake-targets.dot" "$BUILD_DIR" || true
 python3 ./tools/filter_toolkits_dot.py "$OUT_DIR/cmake-targets.dot" "$OUT_DIR/toolkits.dot" || true
 
-echo "[maps] 4) render svgs"
-if command -v dot >/dev/null 2>&1; then
-  dot -Tsvg "$OUT_DIR/include_graph.dot" -o "$OUT_DIR/include_graph.svg" || true
-  dot -Tsvg "$OUT_DIR/toolkits.dot" -o "$OUT_DIR/toolkits.svg" || true
-  dot -Tsvg "$OUT_DIR/cmake-targets.dot" -o "$OUT_DIR/cmake-targets.svg" || true
-fi
+echo "[maps] 4) filtered views (core, exchange+vis)"
+python3 ./tools/filter_maps.py --packages_json "$OUT_DIR/packages.json" --include_dot "$OUT_DIR/include_graph.dot" --out "$OUT_DIR" --mode core
+python3 ./tools/filter_maps.py --packages_json "$OUT_DIR/packages.json" --include_dot "$OUT_DIR/include_graph.dot" --out "$OUT_DIR" --mode exchange_vis
 
 echo "[maps] Done: $OUT_DIR"

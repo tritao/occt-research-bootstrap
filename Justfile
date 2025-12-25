@@ -8,18 +8,18 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
 ROOT := `pwd`
-LOCAL := "{{ROOT}}/.local"
-BIN := "{{LOCAL}}/bin"
-CACHE := "{{ROOT}}/.cache"
-OCCT_DIR := "{{ROOT}}/occt"
-BUILD_DIR := "{{ROOT}}/build-occt"
-MAPS_DIR := "{{ROOT}}/notes/maps"
+LOCAL := ROOT + "/.local"
+BIN := LOCAL + "/bin"
+CACHE := ROOT + "/.cache"
+OCCT_DIR := ROOT + "/occt"
+BUILD_DIR := ROOT + "/build-occt"
+MAPS_DIR := ROOT + "/notes/maps"
 
 default: bootstrap
 
 # --- High level -------------------------------------------------------------
 
-bootstrap: deps local-dirs node-tools go-tools clangd occt-clone occt-build maps backlog-init
+bootstrap: deps local-dirs node-tools go-tools clangd occt-clone occt-configure maps backlog-init
 	@echo ""
 	@echo "Bootstrap complete."
 	@echo "Next:"
@@ -32,7 +32,7 @@ bootstrap: deps local-dirs node-tools go-tools clangd occt-clone occt-build maps
 # --- System deps ------------------------------------------------------------
 
 deps:
-	sudo apt update
+	#sudo apt update
 	sudo apt install -y \
 	  git curl ca-certificates xz-utils unzip \
 	  python3 python3-venv python3-pip \
@@ -72,6 +72,12 @@ occt-clone:
 occt-build:
 	./tools/build_occt.sh "{{OCCT_DIR}}" "{{BUILD_DIR}}"
 
+occt-configure:
+	./tools/configure_occt.sh "{{OCCT_DIR}}" "{{BUILD_DIR}}"
+
+clangd-index:
+	./tools/clangd_index.sh "{{ROOT}}" "{{BUILD_DIR}}" "{{CACHE}}/clangd-index"
+
 maps:
 	./tools/gen_maps.sh "{{OCCT_DIR}}" "{{BUILD_DIR}}" "{{MAPS_DIR}}"
 
@@ -79,6 +85,9 @@ maps:
 
 backlog-init:
 	./tools/init_backlog.sh
+
+backlog-seed:
+	./tools/seed_backlog.sh
 
 # --- Codex MCP wiring -------------------------------------------------------
 

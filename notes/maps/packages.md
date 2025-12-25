@@ -1,0 +1,65 @@
+# OCCT package scan
+- root: `/home/joao/dev/occt-research-bootstrap/occt`
+- packages: **401**
+
+## Top packages by source files
+- `StepBasic`: 144 sources, 168 headers, 148 class/struct decls
+- `StepVisual`: 135 sources, 177 headers, 154 class/struct decls
+- `RWStepBasic`: 119 sources, 0 headers, 0 class/struct decls
+- `StepShape`: 103 sources, 127 headers, 125 class/struct decls
+- `RWStepVisual`: 97 sources, 0 headers, 0 class/struct decls
+- `RWStepShape`: 91 sources, 0 headers, 0 class/struct decls
+- `StepGeom`: 91 sources, 115 headers, 100 class/struct decls
+- `StepKinematics`: 85 sources, 86 headers, 90 class/struct decls
+- `StepRepr`: 85 sources, 97 headers, 102 class/struct decls
+- `RWStepGeom`: 83 sources, 0 headers, 0 class/struct decls
+- `IFSelect`: 77 sources, 89 headers, 93 class/struct decls
+- `RWStepKinematics`: 74 sources, 0 headers, 0 class/struct decls
+- `RWStepRepr`: 70 sources, 0 headers, 0 class/struct decls
+- `TopOpeBRepBuild`: 66 sources, 55 headers, 60 class/struct decls
+- `Graphic3d`: 63 sources, 145 headers, 113 class/struct decls
+- `StepFEA`: 62 sources, 87 headers, 77 class/struct decls
+- `TopOpeBRepDS`: 59 sources, 88 headers, 55 class/struct decls
+- `Extrema`: 58 sources, 80 headers, 94 class/struct decls
+- `StepDimTol`: 56 sources, 76 headers, 68 class/struct decls
+- `GeomFill`: 55 sources, 66 headers, 76 class/struct decls
+- `IGESSolid`: 54 sources, 62 headers, 74 class/struct decls
+- `Expr`: 53 sources, 65 headers, 59 class/struct decls
+- `OpenGl`: 53 sources, 100 headers, 150 class/struct decls
+- `RWStepFEA`: 52 sources, 0 headers, 0 class/struct decls
+- `HLRBRep`: 51 sources, 64 headers, 120 class/struct decls
+- `IGESDimen`: 51 sources, 55 headers, 69 class/struct decls
+- `IGESGeom`: 51 sources, 57 headers, 70 class/struct decls
+- `RWStepDimTol`: 49 sources, 0 headers, 0 class/struct decls
+- `IGESSelect`: 47 sources, 47 headers, 69 class/struct decls
+- `StepAP214`: 46 sources, 80 headers, 128 class/struct decls
+- `GccAna`: 45 sources, 16 headers, 22 class/struct decls
+- `Interface`: 45 sources, 66 headers, 53 class/struct decls
+- `IGESAppli`: 43 sources, 49 headers, 67 class/struct decls
+- `math`: 43 sources, 55 headers, 52 class/struct decls
+- `AIS`: 42 sources, 95 headers, 101 class/struct decls
+- `IGESBasic`: 42 sources, 46 headers, 55 class/struct decls
+- `TDataStd`: 42 sources, 60 headers, 50 class/struct decls
+- `BRepMesh`: 41 sources, 60 headers, 82 class/struct decls
+- `TopOpeBRep`: 41 sources, 47 headers, 55 class/struct decls
+- `Geom`: 40 sources, 42 headers, 58 class/struct decls
+- `IGESData`: 40 sources, 48 headers, 59 class/struct decls
+- `Vrml`: 40 sources, 55 headers, 40 class/struct decls
+- `BOPAlgo`: 39 sources, 36 headers, 41 class/struct decls
+- `Draw`: 37 sources, 34 headers, 43 class/struct decls
+- `StepData`: 37 sources, 41 headers, 50 class/struct decls
+- `TopOpeBRepTool`: 37 sources, 52 headers, 43 class/struct decls
+- `gp`: 36 sources, 44 headers, 42 class/struct decls
+- `XCAFDoc`: 35 sources, 43 headers, 61 class/struct decls
+- `IntPatch`: 34 sources, 43 headers, 69 class/struct decls
+- `IGESDraw`: 33 sources, 37 headers, 59 class/struct decls
+- `IGESGraph`: 33 sources, 39 headers, 51 class/struct decls
+- `ShapeUpgrade`: 33 sources, 33 headers, 48 class/struct decls
+- `GeomToStep`: 32 sources, 32 headers, 121 class/struct decls
+- `BRepFill`: 31 sources, 54 headers, 62 class/struct decls
+- `OSD`: 31 sources, 66 headers, 67 class/struct decls
+- `AppDef`: 30 sources, 32 headers, 44 class/struct decls
+- `TDF`: 30 sources, 66 headers, 33 class/struct decls
+- `GeomInt`: 29 sources, 31 headers, 54 class/struct decls
+- `RWStepAP214`: 29 sources, 0 headers, 0 class/struct decls
+- `Transfer`: 28 sources, 40 headers, 46 class/struct decls

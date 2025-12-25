@@ -24,8 +24,13 @@ if $need_nodesource; then
   sudo apt install -y nodejs
 fi
 
-echo "[node] Installing Backlog.md + Codex CLI into $PREFIX ..."
-npm install -g --prefix "$PREFIX" backlog.md @openai/codex
+echo "[node] Installing Backlog.md into $PREFIX ..."
+npm install -g --prefix "$PREFIX" backlog.md
+
+if [ "${INSTALL_CODEX:-0}" = "1" ]; then
+  echo "[node] Installing Codex CLI into $PREFIX ..."
+  npm install -g --prefix "$PREFIX" @openai/codex
+fi
 
 echo "[node] OK. Binaries should be in: $BIN"
 echo "      Add to PATH: export PATH=\"$(pwd)/.local/bin:$PATH\""

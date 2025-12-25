@@ -6,4 +6,4 @@
    - backlog (Backlog.md)
    - occt-lsp (clangd via mcp-language-server)
 
-Then use prompts in `codex/prompts/`.
+Then use prompts in `prompts/`.

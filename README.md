@@ -33,6 +33,14 @@ backlog board view
 # or: backlog browser
 ```
 
+## Optional: clangd index
+
+If you want faster symbol search, build a clangd index after configuration:
+
+```bash
+just clangd-index
+```
+
 ## What gets created
 
 - `occt/` (OCCT source checkout)
@@ -51,11 +59,10 @@ Use Backlog.md as the source-of-truth task system, and make Codex work in a stri
 3. **Execution**: Codex edits only `notes/`, `tools/`, `oracles/` (never `occt/`).
 4. **Verification**: run the oracle or regeneration targets (`just maps`, `just build-occt`) and paste results into the task notes / dossier.
 
-Starter prompts are in `codex/prompts/`.
+Starter prompts are in `prompts/`.
 
 ## Notes
 
 - clangd is installed locally by downloading the latest LLVM release tarball for Linux x86_64 from GitHub Releases.
 - If GitHub rate limits or the download fails, you can fall back to apt clangd:
   `sudo apt install clangd` (and then update `just codex-mcp` to point at that clangd).
-

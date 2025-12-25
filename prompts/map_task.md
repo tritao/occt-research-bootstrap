@@ -1,0 +1,28 @@
+# Map task prompt (OCCT)
+
+Use this prompt when working on a **type:map** task.
+
+Rules:
+- Do not modify anything under `occt/`.
+- Keep outputs in `notes/maps/` (and scripts, if needed, in `tools/`).
+- When writing notes, cite file paths and class/function names used.
+- Prefer using MCP tools:
+  - Backlog MCP: create/update tasks, add plans, update acceptance criteria.
+  - occt-lsp MCP: symbol lookup (definition/references/hover) to validate interpretations.
+
+Workflow:
+1) Read the task, then add an “Implementation plan” section to the task via Backlog MCP.
+2) Identify which existing generators apply:
+   - `just maps` (package scan + include graph + CMake graphviz)
+   - existing filtered views in `notes/maps/` (core vs exchange/vis)
+3) Produce the requested artifact(s) in `notes/maps/`:
+   - If the task is “lane derivation”, write/update `notes/maps/lanes.md` with:
+     - lane name + `lane:<slug>` label
+     - 3-5 entry packages per lane
+     - citations to `notes/maps/packages.md` and include graph markdown files
+4) Summarize findings into the task notes (short, actionable bullets).
+
+Acceptance criteria checklist (suggested):
+- [ ] Map artifacts exist/updated under `notes/maps/`
+- [ ] Each claim cites the map file used (and relevant symbols if applicable)
+- [ ] Task plan added before changes
