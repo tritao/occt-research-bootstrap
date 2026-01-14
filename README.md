@@ -8,7 +8,7 @@ This repo skeleton bootstraps a repeatable OCCT reverse-engineering + documentat
 - builds a lean OCCT config with Ninja and emits `compile_commands.json`
 - generates dependency maps (CMake target graph + include graph + package scan) into `notes/maps/`
 - initializes Backlog.md inside this repo
-- prepares Codex prompts + agent instructions for a “tasks → dossiers → oracles” loop
+- prepares Codex prompts + agent instructions for a “tasks → dossiers → repros” loop
 
 ## Quick start
 
@@ -48,7 +48,7 @@ just clangd-index
 - `.local/` (local tool installs; add via `source env.sh`)
 - `notes/maps/` (graphs + summaries)
 - `notes/dossiers/` (your algorithm writeups)
-- `oracles/` (runnable OCCT experiments)
+- `tools/repros/` (runnable repro scripts and READMEs)
 
 ## How to use Codex productively (recommended prompt protocol)
 
@@ -56,10 +56,10 @@ Use Backlog.md as the source-of-truth task system, and make Codex work in a stri
 
 1. **Task selection**: tell Codex which backlog task IDs to work on.
 2. **Planning**: require Codex to add an “Implementation plan” to each task file *before writing code*.
-3. **Execution**: Codex edits only `notes/`, `tools/`, `oracles/` (never `occt/`).
-4. **Verification**: run the oracle or regeneration targets (`just maps`, `just build-occt`) and paste results into the task notes / dossier.
+3. **Execution**: Codex edits only `notes/`, `tools/`, `backlog/`, `prompts/` (never `occt/`).
+4. **Verification**: run the repro or regeneration targets (`just maps`, `just build-occt`) and paste results into the task notes / dossier.
 
-Starter prompts are in `prompts/`.
+Starter prompts are in `prompts/` (see `prompts/README.md`).
 
 ## Notes
 
