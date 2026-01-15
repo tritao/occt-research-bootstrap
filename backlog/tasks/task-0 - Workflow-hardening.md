@@ -1,6 +1,6 @@
 ---
 id: task-0
-title: 'Workflow: hardening for systematic OCCT → Rust work'
+title: 'Workflow: hardening for systematic OCCT research work'
 status: Done
 assignee: []
 created_date: '2026-01-15 01:00'

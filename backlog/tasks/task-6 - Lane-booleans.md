@@ -1,15 +1,16 @@
 ---
 id: task-6
 title: 'Lane: booleans'
-status: In Progress
-assignee:
+status: Done
+assignee: []
 created_date: '2026-01-15 00:00'
-updated_date: '2026-01-15 01:54:26'
+updated_date: '2026-01-15 13:24'
 labels:
   - 'lane:booleans'
   - 'type:lane'
-dependencies:
+dependencies: []
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
@@ -29,4 +30,6 @@ Expected artifacts:
 
 <!-- SECTION:NOTES:BEGIN -->
 - Lane complete: `task-6.1` (map) and `task-6.2` (dossier) are Done.
+
+Lane complete: `task-6.1` (map), `task-6.2` (dossier), `task-6.3` (repro+oracle). Artifacts: `notes/maps/lane-booleans.md`, `notes/dossiers/lane-booleans.md`, `repros/lane-booleans/` (golden: `repros/lane-booleans/golden/booleans.json`).
 <!-- SECTION:NOTES:END -->

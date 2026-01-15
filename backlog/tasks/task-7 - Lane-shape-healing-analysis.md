@@ -1,15 +1,16 @@
 ---
 id: task-7
 title: 'Lane: shape-healing-analysis'
-status: In Progress
-assignee:
+status: Done
+assignee: []
 created_date: '2026-01-15 00:00'
-updated_date: '2026-01-15 01:54:26'
+updated_date: '2026-01-15 13:24'
 labels:
   - 'lane:shape-healing-analysis'
   - 'type:lane'
-dependencies:
+dependencies: []
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
@@ -29,4 +30,6 @@ Expected artifacts:
 
 <!-- SECTION:NOTES:BEGIN -->
 - Lane complete: `task-7.1` (map) and `task-7.2` (dossier) are Done.
+
+Lane complete: `task-7.1` (map), `task-7.2` (dossier), `task-7.3` (repro+oracle). Artifacts: `notes/maps/lane-shape-healing-analysis.md`, `notes/dossiers/lane-shape-healing-analysis.md`, `repros/lane-shape-healing-analysis/` (golden: `repros/lane-shape-healing-analysis/golden/shape-healing.json`).
 <!-- SECTION:NOTES:END -->

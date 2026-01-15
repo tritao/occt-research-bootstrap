@@ -1,15 +1,16 @@
 ---
 id: task-8
 title: 'Lane: meshing'
-status: In Progress
-assignee:
+status: Done
+assignee: []
 created_date: '2026-01-15 00:00'
-updated_date: '2026-01-15 01:54:26'
+updated_date: '2026-01-15 13:24'
 labels:
   - 'lane:meshing'
   - 'type:lane'
-dependencies:
+dependencies: []
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
@@ -29,4 +30,6 @@ Expected artifacts:
 
 <!-- SECTION:NOTES:BEGIN -->
 - Lane complete: `task-8.1` (map) and `task-8.2` (dossier) are Done.
+
+Lane complete: `task-8.1` (map), `task-8.2` (dossier), `task-8.3` (repro+oracle). Artifacts: `notes/maps/lane-meshing.md`, `notes/dossiers/lane-meshing.md`, `repros/lane-meshing/` (golden: `repros/lane-meshing/golden/meshing.json`).
 <!-- SECTION:NOTES:END -->

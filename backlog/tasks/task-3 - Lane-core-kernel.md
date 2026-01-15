@@ -1,15 +1,16 @@
 ---
 id: task-3
 title: 'Lane: core-kernel'
-status: In Progress
-assignee:
+status: Done
+assignee: []
 created_date: '2026-01-14 23:59'
-updated_date: '2026-01-15 01:54:26'
+updated_date: '2026-01-15 13:24'
 labels:
   - 'lane:core-kernel'
   - 'type:lane'
-dependencies:
+dependencies: []
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
@@ -29,4 +30,6 @@ Expected artifacts:
 
 <!-- SECTION:NOTES:BEGIN -->
 - Lane complete: `task-3.1` (map) and `task-3.2` (dossier) are Done.
+
+Lane complete: `task-3.1` (map), `task-3.2` (dossier), `task-3.3` (repro+oracle). Artifacts: `notes/maps/lane-core-kernel.md`, `notes/dossiers/lane-core-kernel.md`, `repros/lane-core-kernel/` (golden: `repros/lane-core-kernel/golden/core-kernel.json`).
 <!-- SECTION:NOTES:END -->
