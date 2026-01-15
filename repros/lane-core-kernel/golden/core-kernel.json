@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "occt_version": "7.9.3",
+    "occt_dev": "",
+    "sizeof": {
+      "Standard_Integer": 4,
+      "Standard_Real": 8,
+      "void_ptr": 8
+    }
+  },
+  "precision": {
+    "confusion": 9.9999999999999995e-08,
+    "square_confusion": 9.9999999999999984e-15,
+    "angular": 9.9999999999999998e-13,
+    "p_confusion": 1.0000000000000001e-09
+  },
+  "gp": {
+    "resolution": 2.2250738585072014e-308,
+    "transform": {
+      "angle_rad": 0.5,
+      "translation": [1, 2, 3],
+      "p0": [10, 0, 0],
+      "p1": [9.7758256189037276, 6.7942553860420301, 3]
+    }
+  },
+  "handles": {
+    "value": 42,
+    "refcount_after_new": 1,
+    "refcount_after_copy": 2,
+    "refcount_after_nullify_copy": 1
+  },
+  "ncollection": {
+    "list": {
+      "size": 3,
+      "sum": 6
+    }
+  }
+}
