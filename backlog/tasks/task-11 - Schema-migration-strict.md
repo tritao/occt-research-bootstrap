@@ -1,14 +1,15 @@
 ---
 id: task-11
 title: Schema migration (strict)
-status: In Progress
-assignee:
+status: Done
+assignee: []
 created_date: '2026-01-15 01:29:54'
-updated_date: '2026-01-15 01:54:26'
+updated_date: '2026-01-15 02:07'
 labels:
-  - 'schema-migration'
-dependencies:
+  - schema-migration
+dependencies: []
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
@@ -24,8 +25,8 @@ Run:
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 All targeted docs pass `strict` validation
-- [ ] #2 Task list reflects current `strict` failures (seed script rerun)
+- [x] #1 All targeted docs pass `strict` validation
+- [x] #2 Task list reflects current `strict` failures (seed script rerun)
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -39,5 +40,9 @@ Run:
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
+- Ran `python3 tools/validate_md_types.py --level strict`: OK.
+- Patched all failing lane maps/dossiers to include required strict headings.
+- Re-ran `python3 tools/seed_schema_migration_tasks.py --level strict`: 0 failing docs; task list updated.
+<!-- SECTION:NOTES:END -->
 
 <!-- SECTION:NOTES:END -->
