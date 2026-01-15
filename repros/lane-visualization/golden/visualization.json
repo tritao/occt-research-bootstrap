@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "occt_version": "7.9.3",
+    "occt_dev": ""
+  },
+  "shapes": {
+    "box": {
+      "scenarios": {
+        "abs_defl_0.5": {
+          "deflection_mode": "ABSOLUTE",
+          "abs_deflection": 0.5,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.5,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 6, "faces_with_triangulation": 6, "total_nodes": 24, "total_triangles": 12 }
+        },
+        "abs_defl_0.05": {
+          "deflection_mode": "ABSOLUTE",
+          "abs_deflection": 0.050000000000000003,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.050000000000000003,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 6, "faces_with_triangulation": 6, "total_nodes": 24, "total_triangles": 12 }
+        },
+        "rel_coeff_0.01": {
+          "deflection_mode": "RELATIVE",
+          "abs_deflection": 0.5,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.40000000799999996,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 6, "faces_with_triangulation": 6, "total_nodes": 24, "total_triangles": 12 }
+        }
+      }
+    },
+    "cylinder": {
+      "scenarios": {
+        "abs_defl_0.5": {
+          "deflection_mode": "ABSOLUTE",
+          "abs_deflection": 0.5,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.5,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 3, "faces_with_triangulation": 3, "total_nodes": 146, "total_triangles": 140 }
+        },
+        "abs_defl_0.05": {
+          "deflection_mode": "ABSOLUTE",
+          "abs_deflection": 0.050000000000000003,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.050000000000000003,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 3, "faces_with_triangulation": 3, "total_nodes": 146, "total_triangles": 140 }
+        },
+        "rel_coeff_0.01": {
+          "deflection_mode": "RELATIVE",
+          "abs_deflection": 0.5,
+          "rel_coeff": 0.01,
+          "effective_deflection": 0.40000000799999996,
+          "is_tessellated_before": false,
+          "tessellate_recomputed": true,
+          "is_tessellated_after": true,
+          "is_closed": false,
+          "triangulation": { "faces": 3, "faces_with_triangulation": 3, "total_nodes": 146, "total_triangles": 140 }
+        }
+      }
+    }
+  }
+}
