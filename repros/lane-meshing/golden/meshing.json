@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "occt_version": "7.9.3",
+    "occt_dev": "",
+    "default_angle_rad": 0.5
+  },
+  "shapes": {
+    "box": {
+      "runs": [
+        {"deflection": 0.5, "angle_rad": 0.5, "face_count": 6, "faces_with_triangulation": 6, "total_nodes": 24, "total_triangles": 12, "status_flags": 0},
+        {"deflection": 0.01, "angle_rad": 0.5, "face_count": 6, "faces_with_triangulation": 6, "total_nodes": 24, "total_triangles": 12, "status_flags": 0}
+      ]
+    },
+    "cylinder": {
+      "runs": [
+        {"deflection": 0.5, "angle_rad": 0.5, "face_count": 3, "faces_with_triangulation": 3, "total_nodes": 106, "total_triangles": 100, "status_flags": 0},
+        {"deflection": 0.01, "angle_rad": 0.5, "face_count": 3, "faces_with_triangulation": 3, "total_nodes": 222, "total_triangles": 216, "status_flags": 0}
+      ]
+    }
+  }
+}
