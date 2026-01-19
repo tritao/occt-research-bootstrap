@@ -70,6 +70,7 @@ export default defineConfig({
 								{ label: 'Dossier', slug: 'occt/dossiers/lane-fillets' },
 								{ label: 'Algorithm (ChFi3d)', slug: 'occt/dossiers/algorithm-fillets-chfi3d' },
 								{ label: 'Walkthrough', slug: 'occt/walkthroughs/fillets' },
+								{ label: 'Cases', slug: 'occt/walkthroughs/fillets-cases' },
 								{ label: 'Repro', slug: 'occt/repros/lane-fillets/readme' },
 							],
 						},

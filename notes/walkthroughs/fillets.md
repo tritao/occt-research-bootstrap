@@ -23,9 +23,7 @@ Oracle output:
 Open `repros/lane-fillets/golden/fillets.json`:
 
 1) Treat each case as a separate experiment
-   - `cases.single_edge_radius_1` should succeed
-   - `cases.corner_3_edges_radius_1` exercises corner handling
-   - `cases.single_edge_radius_100` should fail (too large)
+   - see the per-case expectations in `notes/walkthroughs/fillets-cases.md`
 
 2) First check: did the builder produce a final shape
    - `cases.<case>.build.is_done`
@@ -69,4 +67,3 @@ When a fillet fails in “real work”, the fastest order is:
 3) Reduce radius and retry (start failures are often radius driven)
 4) If working on imported or booleaned shapes, heal first (`notes/maps/hub-shape-healing-analysis.md`)
 5) If you get a result but `is_valid=false`, suspect tiny edges and corner complexity
-

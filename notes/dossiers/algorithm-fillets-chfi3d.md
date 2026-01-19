@@ -49,13 +49,10 @@ Shared diagnostics surface (fillets expose it directly; chamfers mostly don’t)
 
 ## Scenario + observable outputs (evidence-driven)
 
-The repro uses a deterministic input shape (a `10×10×10` box) and runs a small matrix of operations:
-- constant-radius fillet on one box edge (`radius=1`)
-- constant-radius fillet on a 3-edge corner (`radius=1`)
-- variable-radius fillet on one box edge (`r1=0.5 → r2=2`)
-- failing fillet on one edge (`radius=100`, shows `ChFiDS_StartsolFailure`)
-- symmetric chamfer on one edge (`dist=1`)
-- symmetric chamfer on a 3-edge corner (`dist=1`)
+Use the fillets repro to keep this dossier grounded in observable fields:
+- Repro runner: `repros/lane-fillets/run.sh`
+- Oracle output: `repros/lane-fillets/golden/fillets.json`
+- Case-by-case reading guide: `notes/walkthroughs/fillets-cases.md`
 
 All outputs are recorded to `repros/lane-fillets/golden/fillets.json`:
 - build-level outcome: `did_throw`, `is_done`, `exception`
