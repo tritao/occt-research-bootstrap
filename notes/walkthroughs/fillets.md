@@ -8,16 +8,6 @@ This walkthrough makes OCCT fillets feel like a debuggable “local operation pi
 - How to interpret `StripeStatus` as the primary error signal.
 - Why “build done” and “result valid” are different checks.
 
-## Run the repro
-
-From repo root:
-
-- `just occt-build`
-- `bash repros/lane-fillets/run.sh`
-
-Oracle output:
-- `repros/lane-fillets/golden/fillets.json`
-
 ## Read the oracle output (step-by-step)
 
 Open `repros/lane-fillets/golden/fillets.json`:
