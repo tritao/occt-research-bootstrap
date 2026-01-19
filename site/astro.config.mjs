@@ -117,7 +117,6 @@ export default defineConfig({
 						},
 					],
 				},
-				{ label: 'Walkthroughs', autogenerate: { directory: 'occt/walkthroughs' } },
 				{
 					label: 'Indexes',
 					items: [
