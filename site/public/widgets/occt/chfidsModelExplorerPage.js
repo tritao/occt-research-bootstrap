@@ -777,6 +777,25 @@ async function initOne(root) {
     caseSel.appendChild(opt);
   }
 
+  const readUrlState = () => {
+    try {
+      const u = new URL(window.location.href);
+      const p = u.searchParams;
+      const caseId = String(p.get('cme_case') || p.get('case') || '');
+      const mesh = String(p.get('cme_mesh') || '');
+      const stepRaw = p.get('cme_step');
+      const stepIndex = stepRaw == null ? null : Number(stepRaw);
+      return { caseId, mesh, stepIndex };
+    } catch {
+      return { caseId: '', mesh: '', stepIndex: null };
+    }
+  };
+
+  const urlState = readUrlState();
+  if (urlState.caseId && names.includes(urlState.caseId)) {
+    caseSel.value = urlState.caseId;
+  }
+
   const viewer = createThreeViewer(viewerEl, setStatus);
   const overlays = {
     spine: new THREE.Group(),
@@ -803,6 +822,23 @@ async function initOne(root) {
   let modelLoadToken = 0;
 
   const meshMode = () => (meshModeEls.find((n) => n.checked) || {}).value || 'auto';
+
+  if (urlState.mesh === 'auto' || urlState.mesh === 'input' || urlState.mesh === 'result') {
+    const el = meshModeEls.find((n) => n.value === urlState.mesh);
+    if (el) el.checked = true;
+  }
+
+  const syncUrl = () => {
+    try {
+      const u = new URL(window.location.href);
+      const p = u.searchParams;
+      p.set('cme_case', String(currentCaseId || caseSel.value || ''));
+      p.set('cme_step', String(state.stepIndex ?? 0));
+      p.set('cme_mesh', String(meshMode() || 'auto'));
+      u.search = p.toString();
+      window.history.replaceState(null, '', u);
+    } catch {}
+  };
 
   const desiredMeshKindForStep = (stepIndex) => {
     const idx = Number(stepIndex) || 0;
@@ -1365,6 +1401,7 @@ async function initOne(root) {
     currentMeshKind = effectiveMeshKind();
     updateTitle(currentCaseId, currentMeshKind);
     applyMesh();
+    syncUrl();
 
     const token = ++modelLoadToken;
     inspectorEl.replaceChildren(el('p', {}, ['Loading model.json…']));
@@ -1401,6 +1438,7 @@ async function initOne(root) {
       if (mode === 'input' || mode === 'result') currentMeshKind = mode;
       else if (desired) currentMeshKind = desired;
       applyMesh();
+      syncUrl();
     });
   wireEl?.addEventListener('change', applyViewerOptions);
   edgesEl?.addEventListener('change', applyViewerOptions);
@@ -1444,6 +1482,7 @@ async function initOne(root) {
     try {
       step?.apply?.();
     } catch {}
+    syncUrl();
     // Auto mesh mode: step-driven input/result defaults.
     if (meshMode() === 'auto') {
       const desired = desiredMeshKindForStep(state.stepIndex);
@@ -1470,7 +1509,8 @@ async function initOne(root) {
   currentCaseId = caseSel.value;
   currentMeshKind = effectiveMeshKind();
   await setCase(currentCaseId);
-  void setStep(0);
+  const initialStep = Number.isFinite(urlState.stepIndex) ? urlState.stepIndex : 0;
+  await setStep(initialStep);
 }
 
 export function initChFiDSModelExplorer() {

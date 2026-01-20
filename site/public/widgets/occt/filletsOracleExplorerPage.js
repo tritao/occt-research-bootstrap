@@ -251,6 +251,39 @@ async function initOne(root) {
 
   const viewer = createThreeViewer(viewerEl, setStatus);
 
+  const readUrlState = () => {
+    try {
+      const u = new URL(window.location.href);
+      const p = u.searchParams;
+      const primary = String(p.get('foe_primary') || p.get('foe_case') || p.get('case') || '');
+      const compare = String(p.get('foe_compare') || '');
+      const mesh = String(p.get('foe_mesh') || '');
+      const target = String(p.get('foe_target') || '');
+      const diff = String(p.get('foe_diff') || '');
+      const wire = String(p.get('foe_wire') || '');
+      const edges = String(p.get('foe_edges') || '');
+      return { primary, compare, mesh, target, diff, wire, edges };
+    } catch {
+      return { primary: '', compare: '', mesh: '', target: '', diff: '', wire: '', edges: '' };
+    }
+  };
+
+  const syncUrl = () => {
+    try {
+      const u = new URL(window.location.href);
+      const p = u.searchParams;
+      p.set('foe_primary', String(primarySel.value || ''));
+      p.set('foe_compare', String(compareSel.value || ''));
+      p.set('foe_mesh', String(getMeshKind() || 'result'));
+      p.set('foe_target', String(getViewTarget() || 'primary'));
+      p.set('foe_diff', getDiffOnly() ? '1' : '0');
+      p.set('foe_wire', Boolean(wireEl?.checked) ? '1' : '0');
+      p.set('foe_edges', Boolean(edgesEl?.checked) ? '1' : '0');
+      u.search = p.toString();
+      window.history.replaceState(null, '', u);
+    } catch {}
+  };
+
   const setOptions = (select, ids, selected) => {
     select.replaceChildren();
     for (const id of ids) {
@@ -267,6 +300,21 @@ async function initOne(root) {
   const getMeshKind = () => (meshKindEls.find((n) => n.checked) || {}).value || 'input';
   const getViewTarget = () => (viewTargetEls.find((n) => n.checked) || {}).value || 'primary';
   const getDiffOnly = () => Boolean(diffOnlyEl?.checked);
+
+  const urlState = readUrlState();
+  if (urlState.primary && names.includes(urlState.primary)) primarySel.value = urlState.primary;
+  if (urlState.compare && names.includes(urlState.compare)) compareSel.value = urlState.compare;
+  if (urlState.mesh === 'input' || urlState.mesh === 'result') {
+    const el = meshKindEls.find((n) => n.value === urlState.mesh);
+    if (el) el.checked = true;
+  }
+  if (urlState.target === 'primary' || urlState.target === 'compare') {
+    const el = viewTargetEls.find((n) => n.value === urlState.target);
+    if (el) el.checked = true;
+  }
+  if (diffOnlyEl && (urlState.diff === '1' || urlState.diff === 'true')) diffOnlyEl.checked = true;
+  if (wireEl && (urlState.wire === '1' || urlState.wire === 'true')) wireEl.checked = true;
+  if (edgesEl && (urlState.edges === '0' || urlState.edges === 'false')) edgesEl.checked = false;
 
   const updateViewerTitle = (caseId, meshKind, target) => {
     if (!viewerTitleEl) return;
@@ -302,6 +350,8 @@ async function initOne(root) {
       downloadEl.textContent = `Download ${meshKindLabel(meshKind)}`;
       downloadEl.title = url;
     }
+
+    syncUrl();
   };
 
   primarySel.addEventListener('change', render);
@@ -324,4 +374,3 @@ export function initFilletsOracleExplorer() {
 }
 
 initOnPageEvents(initFilletsOracleExplorer);
-
