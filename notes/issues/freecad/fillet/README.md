@@ -1,0 +1,53 @@
+# Fillet Issues
+
+- Issues: `47`
+
+## List
+
+- `#5561`: `05561-fillet-can-not-round-a-face-upstream-occ-bug.md` — Fillet can not round a face (upstream OCC bug)
+- `#5634`: `05634-occ-pad-fillet-apply-thickness-causes-crash-upstream-occ-bug.md` — OCC: Pad → Fillet → Apply Thickness causes crash (upstream OCC bug)
+- `#5799`: `05799-occ-fillet-fails-on-cut-torus.md` — OCC: fillet fails on cut torus
+- `#5829`: `05829-occ-thickness-operation-for-part-fails-upstream-bug.md` — OCC: Thickness operation for part fails (upstream bug)
+- `#8549`: `08549-occt-fillet-is-bumpy-on-edge-of-cylinder.md` — OCCT: Fillet is bumpy on edge of cylinder
+- `#10760`: `10760-problem-crash-when-adding-partdesign-fillet.md` — [Problem] Crash when adding PartDesign fillet
+- `#11082`: `11082-problem-broken-partdesign-fillet.md` — [Problem] Broken PartDesign fillet
+- `#11654`: `11654-occ-fillet-causes-a-crash.md` — OCC: Fillet causes a crash
+- `#12522`: `12522-problem-partdesign-fillet-causes-huge-memory-consumption.md` — [Problem] PartDesign: fillet causes huge memory consumption
+- `#14604`: `14604-fillet-failing-on-curved-object.md` — Fillet failing on curved object
+- `#16644`: `16644-part-crash-when-changing-edge-to-be-too-small-for-fillet.md` — Part: Crash when changing edge to be too small for fillet
+- `#16654`: `16654-part-fillet-fails-on-refined-shape-where-it-succeeds-on-same-edges-before-refine.md` — Part: Fillet fails on refined shape, where it succeeds on same edges before refinement
+- `#17261`: `17261-fillet-with-tapered-ends-breaks-the-geometry.md` — Fillet with tapered ends  breaks the geometry
+- `#17682`: `17682-partdesign-fillet-results-in-a-wrong-shape-for-a-complex-body.md` — PartDesign: Fillet results in a wrong shape for a complex body
+- `#17845`: `17845-radius-on-curved-shape-problem.md` — Radius on curved shape problem
+- `#18290`: `18290-crash-when-trying-to-fillet-chamfer-this-surface.md` — Crash when trying to fillet/chamfer this surface
+- `#18383`: `18383-partdesign-fillet-brep-api-command-not-done-on-a-padded-circle-with-a-sphere-hol.md` — PartDesign: Fillet: BRep_API: command not done - on a padded circle with a sphere hollow on its side
+- `#18556`: `18556-partdesign-when-chamfer-is-too-large-at-top-of-a-cylinder-previous-versions-used.md` — PartDesign: When chamfer is too large at top of a cylinder, previous versions used to report an error but in 1.1-dev it computes an invalid body
+- `#18573`: `18573-fillet-on-subtracted-squared-off-cylinder-creates-round-and-square-corners-simul.md` — Fillet on subtracted squared off cylinder creates round and square corners simultaneously
+- `#19055`: `19055-partdesign-fillet-causes-face-not-closed-and-self-intersecting-wire.md` — PartDesign: Fillet causes face not closed and self intersecting wire
+- `#19383`: `19383-filleting-on-pockets-on-domes-with-flat-tops-is-broken.md` — Filleting on pockets on domes with flat tops is broken
+- `#19702`: `19702-fillet-on-curve-surface-or-edge-will-crash.md` — Fillet on curve surface or edge will crash
+- `#19703`: `19703-unexpected-result-from-fillet.md` — Unexpected result from fillet
+- `#19931`: `19931-incompatibility-of-versions.md` — incompatibility of versions
+- `#20071`: `20071-part-partdesign-fillets-and-chamfers-are-automatically-propagated-to-edges-tange.md` — Part/ PartDesign: Fillets and chamfers are automatically propagated to edges tangent to selection
+- `#20085`: `20085-freeze-on-fillet-creation.md` — Freeze on fillet creation
+- `#20408`: `20408-occ-two-distance-chamfer-not-working-on-other-end-of-two-sided-symmetrical-model.md` — OCC: Two-distance Chamfer not working on other end of two-sided, symmetrical model
+- `#20586`: `20586-occ-create-a-fillet-one-way-it-works-but-create-a-fillet-another-way-it-fails.md` — OCC: Create a Fillet one way- it works, but create a fillet another way it fails.
+- `#20889`: `20889-step-export-gives-wrong-results-for-fillets-occ-related.md` — STEP: export gives wrong results for fillets (OCC related)
+- `#21003`: `21003-occ-unable-to-add-fillet-to-a-mirrored-element-created-by-a-shaped-additive-pipe.md` — OCC: Unable to add "Fillet" to a mirrored element created by a shaped Additive Pipe on a wire
+- `#21173`: `21173-partdesign-fillet-and-subtractive-pipe-are-failing-to-make-a-fillet.md` — PartDesign: Fillet and Subtractive Pipe are failing to make a fillet.
+- `#21665`: `21665-problem-fillet-breaks-on-tapered-surfaces-depending-on-the-angle.md` — [Problem] Fillet breaks on tapered surfaces depending on the angle
+- `#22031`: `22031-partdesign-featurethickness-cpp-152-exception-on-making-thick-solid-brep-api-com.md` — PartDesign: `FeatureThickness.cpp(152): Exception on making thick solid: BRep_API: command not done Thickness: Failed to make thick solid`
+- `#23065`: `23065-some-faces-disappear-before-using-fillet-tool.md` — Some faces disappear before using fillet tool!
+- `#23133`: `23133-floating-artifacts-added-after-fillet-is-created.md` — Floating artifacts added after fillet is created
+- `#23818`: `23818-partdesign-crash-when-doing-a-chamfer-on-an-edge-connected-to-a-fillet-occ-relat.md` — PartDesign: Crash when doing a chamfer on an edge connected to a fillet (OCC related)
+- `#24135`: `24135-partdesign-fillet-fails-when-touching-a-line-on-a-tapered-face.md` — PartDesign: Fillet fails when touching a line on a tapered face
+- `#24155`: `24155-wrong-orientation-of-fillet-edge-blend-leads-to-invalid-solid.md` — Wrong orientation of fillet edge blend leads to invalid solid
+- `#24747`: `24747-occ-fillet-rarely-fails-when-intersecting-a-hole.md` — OCC: Fillet rarely fails when intersecting a hole
+- `#24892`: `24892-occ-failing-fillets-between-tilted-faces.md` — OCC: Failing fillets between tilted faces
+- `#25067`: `25067-partdesign-fillet-or-chamfer-on-a-loft-breaks-the-model.md` — PartDesign: Fillet or chamfer on a loft breaks the model
+- `#25134`: `25134-partdesign-fillet-is-crashing-in-1-1dev-and-1-1rc1-but-not-in-1-0-x-regression.md` — PartDesign: Fillet is crashing in 1.1dev and 1.1RC1 but not in 1.0.x (Regression)
+- `#25206`: `25206-fillet-works-on-surface-but-not-on-its-edges-chamfer-not-working-on-either-brep.md` — Fillet works on surface but not on its edges - chamfer not working on either - BRep_API: Command not done
+- `#25289`: `25289-partdesign-occt-crash-under-certain-circumstances.md` — PartDesign: OCCT crash under certain circumstances
+- `#25868`: `25868-1-1rc1-crash-on-fillet-size-change-occ-related.md` — 1.1rc1 - crash on fillet size change (OCC related)
+- `#25916`: `25916-fillet-malformed-after-applying.md` — Fillet malformed after applying.
+- `#26152`: `26152-fillet-bends-inside-even-with-merged-bodies.md` — Fillet bends inside even with merged bodies.

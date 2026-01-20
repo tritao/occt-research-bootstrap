@@ -75,6 +75,7 @@ The important debugging shift: treat filleting as a **pipeline with per-contour 
 - `occt/src/ChFiDS/ChFiDS_Stripe.hxx` — stores per-contour computed geometry/topology (“stripe”)
 - `occt/src/ChFiDS/ChFiDS_Spine.hxx` / `occt/src/ChFiDS/ChFiDS_FilSpine.hxx` — notion of “spine” along which the blend is parameterized
 - `occt/src/ChFiKPart/ChFiKPart_ComputeData.hxx` (and neighbors) — corner/cross-section helpers (where corner robustness work often lives)
+- ChFiDS data model overview: [Dossier: ChFiDS Data Model](algorithm-fillets-chfids-data-model.md)
 
 ## Core data structures + invariants
 
@@ -109,4 +110,3 @@ The important debugging shift: treat filleting as a **pipeline with per-contour 
 - Rolling-ball / offset-surface view (classic CAD fillets): conceptually simple (offset faces by radius, intersect offsets, trim), but requires many robust intersection/trimming steps; OCCT’s builder package architecture reflects that complexity.
 - Polygonal fillets (mesh beveling): easier to implement and robust for visualization, but does not preserve analytic/spline surface definitions or CAD continuity constraints; OCCT targets B-Rep + geometric continuity.
 - Exact arithmetic kernels: can make predicates robust, but fillet construction still needs robust surface/surface intersections and trimming; OCCT’s approach leans on tolerances and dedicated healing/repair tooling.
-

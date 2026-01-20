@@ -64,7 +64,36 @@ def link_occt_code_refs(md: str, *, occt_tag: str) -> str:
     return OCCT_CODE_REF_RE.sub(repl, md)
 
 
-def rewrite_internal_markdown_links(md: str) -> str:
+def rewrite_internal_markdown_links(md: str, *, from_rel: str) -> str:
+    """
+    Rewrite markdown links for Starlight:
+    - Convert .md -> trailing slash routes
+    - Convert */README.md -> */readme/
+    - Rewrite repo-root style links (notes/.../foo.md) into correct relative links
+      within the generated site docs tree.
+    """
+
+    from_dir = Path(from_rel).parent.as_posix()
+    if from_dir == ".":
+        from_dir = ""
+
+    def repo_path_to_site_rel(base: str) -> str | None:
+        # Map repo-root paths to the generated docs tree under `occt/`.
+        # Returned path is relative to the `occt/` docs root.
+        if base.startswith("notes/"):
+            return base[len("notes/") :]
+        if base.startswith("backlog/docs/"):
+            return "backlog/docs/" + base[len("backlog/docs/") :]
+        if base.startswith("repros/"):
+            return base
+        return None
+
+    def rel_to_from_dir(site_rel: str) -> str:
+        # Make a relative link from the current doc to the target doc.
+        if not from_dir:
+            return site_rel
+        return Path(os.path.relpath(site_rel, start=from_dir)).as_posix()
+
     def rewrite_target(target: str) -> str:
         if "://" in target:
             return target
@@ -78,6 +107,11 @@ def rewrite_internal_markdown_links(md: str) -> str:
                 base, rest = base.split(sep, 1)
                 suffix = sep + rest
                 break
+
+        # Rewrite repo-root style links into site-relative paths.
+        mapped = repo_path_to_site_rel(base)
+        if mapped is not None:
+            base = rel_to_from_dir(mapped)
 
         if base.endswith("/README.md") or base.endswith("/readme.md"):
             base = base[: -len("/README.md")] + "/readme/"
@@ -128,10 +162,19 @@ def strip_section(md: str, heading: str) -> str:
     return "".join(lines)
 
 
-def copy_file(src: Path, dst: Path, *, tmp_root: Path, src_rel: str, occt_tag: str) -> None:
+def copy_file(
+    src: Path,
+    dst: Path,
+    *,
+    tmp_root: Path,
+    src_rel: str,
+    dst_rel: str,
+    occt_tag: str,
+    keep: set[Path] | None = None,
+) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     text = src.read_text(encoding="utf-8", errors="replace")
-    text = rewrite_internal_markdown_links(text)
+    text = rewrite_internal_markdown_links(text, from_rel=dst_rel)
     text = link_occt_code_refs(text, occt_tag=occt_tag)
 
     # Site-specific cleanup for generated scaffolding.
@@ -174,6 +217,17 @@ def copy_file(src: Path, dst: Path, *, tmp_root: Path, src_rel: str, occt_tag: s
     # Site-specific pruning: keep backlog tracking out of the rendered docs.
     text = strip_section(text, "## Backlog tasks")
 
+    # Avoid touching the file if nothing changed; helps Astro watchers and keeps diffs clean.
+    if dst.is_file():
+        try:
+            existing = dst.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            existing = None
+        if existing == text:
+            if keep is not None:
+                keep.add(dst.resolve())
+            return
+
     # Write atomically to avoid transient partial reads during Astro's file-watching.
     # Keep temp files OUT of the docs tree so Starlight doesn't accidentally index them.
     tmp_root.mkdir(parents=True, exist_ok=True)
@@ -192,25 +246,55 @@ def copy_file(src: Path, dst: Path, *, tmp_root: Path, src_rel: str, occt_tag: s
             f.write(text)
         os.chmod(tmp_path, target_mode)
         os.replace(tmp_path, dst)
+        if keep is not None:
+            keep.add(dst.resolve())
     finally:
         if tmp_path and tmp_path.exists():
             tmp_path.unlink(missing_ok=True)
 
 
-def copy_glob(root: Path, pattern: str, dest_root: Path, *, tmp_root: Path, occt_tag: str) -> int:
+def copy_glob(
+    root: Path,
+    pattern: str,
+    dest_root: Path,
+    *,
+    tmp_root: Path,
+    occt_tag: str,
+    dst_rel_prefix: str = "",
+    keep: set[Path] | None = None,
+) -> int:
     count = 0
     for src in sorted(root.glob(pattern)):
         if not src.is_file():
             continue
         rel = src.relative_to(root)
-        copy_file(src, dest_root / rel, tmp_root=tmp_root, src_rel=str(rel), occt_tag=occt_tag)
+        copy_file(
+            src,
+            dest_root / rel,
+            tmp_root=tmp_root,
+            src_rel=str(rel),
+            dst_rel=str((Path(dst_rel_prefix) / rel).as_posix()) if dst_rel_prefix else str(rel),
+            occt_tag=occt_tag,
+            keep=keep,
+        )
         count += 1
     return count
 
 
-def write_text_atomic(dst: Path, text: str, *, tmp_root: Path) -> None:
+def write_text_atomic(dst: Path, text: str, *, tmp_root: Path, keep: set[Path] | None = None) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     tmp_root.mkdir(parents=True, exist_ok=True)
+
+    if dst.is_file():
+        try:
+            existing = dst.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            existing = None
+        if existing == text:
+            if keep is not None:
+                keep.add(dst.resolve())
+            return
+
     target_mode = 0o644
     tmp_path = None
     try:
@@ -226,175 +310,152 @@ def write_text_atomic(dst: Path, text: str, *, tmp_root: Path) -> None:
             f.write(text)
         os.chmod(tmp_path, target_mode)
         os.replace(tmp_path, dst)
+        if keep is not None:
+            keep.add(dst.resolve())
     finally:
         if tmp_path and tmp_path.exists():
             tmp_path.unlink(missing_ok=True)
 
 
+def write_bytes_atomic(dst: Path, data: bytes, *, tmp_root: Path, keep: set[Path] | None = None) -> None:
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    tmp_root.mkdir(parents=True, exist_ok=True)
+
+    if dst.is_file():
+        try:
+            existing = dst.read_bytes()
+        except Exception:
+            existing = None
+        if existing == data:
+            if keep is not None:
+                keep.add(dst.resolve())
+            return
+
+    target_mode = 0o644
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb",
+            dir=tmp_root,
+            prefix="sync-",
+            suffix=".tmp",
+            delete=False,
+        ) as f:
+            tmp_path = Path(f.name)
+            f.write(data)
+        os.chmod(tmp_path, target_mode)
+        os.replace(tmp_path, dst)
+        if keep is not None:
+            keep.add(dst.resolve())
+    finally:
+        if tmp_path and tmp_path.exists():
+            tmp_path.unlink(missing_ok=True)
+
+
+def sync_tree(src_root: Path, dst_root: Path, *, tmp_root: Path) -> None:
+    """
+    Mirror a directory tree into dst_root, copying only changed files and deleting stale files.
+    """
+    if not src_root.is_dir():
+        return
+
+    want: set[str] = set()
+    for src in src_root.rglob("*"):
+        if not src.is_file():
+            continue
+        rel = src.relative_to(src_root).as_posix()
+        want.add(rel)
+        write_bytes_atomic(dst_root / rel, src.read_bytes(), tmp_root=tmp_root)
+
+    if not dst_root.exists():
+        return
+
+    for dst in dst_root.rglob("*"):
+        if not dst.is_file():
+            continue
+        rel = dst.relative_to(dst_root).as_posix()
+        if rel not in want:
+            dst.unlink()
+
+
 def write_fillets_oracle_explorer(
     *,
     repo_root: Path,
+    site_root: Path,
     dest_root: Path,
     tmp_root: Path,
     occt_tag: str,
+    keep: set[Path] | None = None,
 ) -> None:
     oracle_path = repo_root / "repros" / "lane-fillets" / "golden" / "fillets.json"
     if not oracle_path.is_file():
         return
-    oracle_json = oracle_path.read_text(encoding="utf-8", errors="replace")
-    # Avoid accidentally closing the script tag if the JSON ever contains "</script>".
-    oracle_json = oracle_json.replace("</", "<\\/")
 
-    md = f"""---
+    # Publish the oracle JSON as a static asset for client-side loading.
+    public_oracle = site_root / "public" / "occt" / "oracles" / "fillets.json"
+    write_text_atomic(
+        public_oracle,
+        oracle_path.read_text(encoding="utf-8", errors="replace"),
+        tmp_root=tmp_root,
+    )
+
+    # Publish per-case mesh artifacts (generated by the repro) as static assets.
+    src_artifacts = repo_root / "repros" / "lane-fillets" / "golden" / "artifacts"
+    dst_artifacts = site_root / "public" / "occt" / "artifacts" / "fillets"
+    sync_tree(src_artifacts, dst_artifacts, tmp_root=tmp_root)
+
+    # Generate an MDX page that mounts an Astro component (scripts in Markdown are not reliably executed).
+    mdx = """---
 title: "Fillets Oracle Explorer"
+tableOfContents: false
 ---
 
-This page is generated by `tools/sync_starlight_site.py` from:
-- Oracle: `{oracle_path.relative_to(repo_root)}`
+import FilletsOracleExplorer from '../../../../components/FilletsOracleExplorer.astro';
 
-<div id="fillets-oracle-explorer" data-occt-tag="{occt_tag}"></div>
-<script type="application/json" id="fillets-oracle-json">
-{oracle_json}
-</script>
-<script>
-(() => {{
-  const root = document.getElementById('fillets-oracle-explorer');
-  const script = document.getElementById('fillets-oracle-json');
-  if (!root || !script) return;
+This page visualizes the fillets repro oracle:
+- JSON: `/occt/oracles/fillets.json`
+- Source: `repros/lane-fillets/golden/fillets.json`
 
-  let data;
-  try {{
-    data = JSON.parse(script.textContent || '{{}}');
-  }} catch (e) {{
-    root.textContent = 'Failed to parse oracle JSON.';
-    return;
-  }}
-
-  const cases = (data && data.cases) || {{}};
-  const names = Object.keys(cases).sort();
-  if (!names.length) {{
-    root.textContent = 'No cases found in oracle JSON.';
-    return;
-  }}
-
-  const el = (tag, attrs = {{}}, children = []) => {{
-    const node = document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs)) {{
-      if (v === null || v === undefined) continue;
-      if (k === 'class') node.className = v;
-      else node.setAttribute(k, String(v));
-    }}
-    for (const child of children) {{
-      if (child === null || child === undefined) continue;
-      node.appendChild(typeof child === 'string' ? document.createTextNode(child) : child);
-    }}
-    return node;
-  }};
-
-  const fmt = (v) => {{
-    if (v === null || v === undefined) return '—';
-    if (typeof v === 'boolean') return v ? 'true' : 'false';
-    if (typeof v === 'number') return Number.isFinite(v) ? String(v) : '—';
-    if (typeof v === 'string') return v || '—';
-    return JSON.stringify(v);
-  }};
-
-  const toList = (obj) => {{
-    if (!obj || typeof obj !== 'object') return '—';
-    const entries = Object.entries(obj);
-    if (!entries.length) return '—';
-    return entries.map(([k, v]) => `${{k}}: ${{v}}`).join(', ');
-  }};
-
-  const renderCase = (name) => {{
-    const c = cases[name] || {{}};
-    const build = c.build || {{}};
-    const result = c.result || {{}};
-    const contours = Array.isArray(build.contours) ? build.contours : [];
-
-    const summaryRows = [
-      ['kind', c.kind],
-      ['is_done', build.is_done],
-      ['did_throw', build.did_throw],
-      ['exception', build.exception],
-      ['nb_contours', build.nb_contours],
-      ['nb_faulty_contours', build.nb_faulty_contours],
-      ['nb_faulty_vertices', build.nb_faulty_vertices],
-      ['has_result', build.has_result],
-      ['result.is_valid', result.is_valid],
-      ['result.counts', result.counts ? `solids=${{result.counts.solids}}, faces=${{result.counts.faces}}, edges=${{result.counts.edges}}, vertices=${{result.counts.vertices}}` : null],
-      ['computed surfaces (per contour)', contours.length ? '' : '—'],
-    ];
-
-    const summary = el('table', {{ class: 'sl-markdown-content' }}, [
-      el('tbody', {{}}, summaryRows.map(([k, v]) => el('tr', {{}}, [
-        el('td', {{}}, [String(k)]),
-        el('td', {{}}, [fmt(v)]),
-      ]))),
-    ]);
-
-    const contourTable = el('table', {{ class: 'sl-markdown-content' }}, [
-      el('thead', {{}}, [
-        el('tr', {{}}, [
-          el('th', {{}}, ['ic']),
-          el('th', {{}}, ['nb_edges']),
-          el('th', {{}}, ['stripe_status']),
-          el('th', {{}}, ['computed_surface_types']),
-        ]),
-      ]),
-      el('tbody', {{}}, contours.map((row) => el('tr', {{}}, [
-        el('td', {{}}, [fmt(row.ic)]),
-        el('td', {{}}, [fmt(row.nb_edges)]),
-        el('td', {{}}, [fmt(row.stripe_status_name || row.stripe_status)]),
-        el('td', {{}}, [toList(row.computed_surface_types)]),
-      ]))),
-    ]);
-
-    return el('div', {{}}, [
-      el('h3', {{}}, [name]),
-      summary,
-      el('h4', {{}}, ['Contours']),
-      contourTable,
-    ]);
-  }};
-
-  const select = (id, label, initial) => {{
-    const s = el('select', {{ id }}, names.map((n) => el('option', {{ value: n, selected: n === initial ? 'selected' : null }}, [n])));
-    const wrap = el('label', {{ style: 'display:block; margin: 0.5rem 0;' }}, [
-      el('span', {{ style: 'display:block; font-weight: 600; margin-bottom: 0.25rem;' }}, [label]),
-      s,
-    ]);
-    return [wrap, s];
-  }};
-
-  const [primaryWrap, primarySel] = select('fillets-case-primary', 'Case', names[0]);
-  const [compareWrap, compareSel] = select('fillets-case-compare', 'Compare (optional)', names.length > 1 ? names[1] : names[0]);
-
-  const out = el('div', {{}}, []);
-  const render = () => {{
-    out.replaceChildren();
-    out.appendChild(el('div', {{ style: 'display:grid; grid-template-columns: 1fr; gap: 1rem;' }}, [
-      renderCase(primarySel.value),
-      (compareSel.value && compareSel.value !== primarySel.value) ? renderCase(compareSel.value) : el('div', {{}}, []),
-    ]));
-  }};
-
-  primarySel.addEventListener('change', render);
-  compareSel.addEventListener('change', render);
-
-  root.replaceChildren(
-    el('p', {{}}, ['Pick a case and optionally compare it to another. Data comes from the repo oracle JSON.']),
-    primaryWrap,
-    compareWrap,
-    out,
-  );
-  render();
-}})();
-</script>
+<FilletsOracleExplorer url="/occt/oracles/fillets.json" />
 """
 
-    dst = dest_root / "walkthroughs" / "fillets-explorer.md"
-    write_text_atomic(dst, md, tmp_root=tmp_root)
+    # Ensure we don't keep an old .md version around (would cause duplicate ids).
+    stale_md = dest_root / "walkthroughs" / "fillets-explorer.md"
+    if stale_md.exists():
+        stale_md.unlink()
+
+    dst = dest_root / "walkthroughs" / "fillets-explorer.mdx"
+    write_text_atomic(dst, mdx, tmp_root=tmp_root, keep=keep)
+
+
+def write_chfids_model_explorer(
+    *,
+    repo_root: Path,
+    site_root: Path,
+    dest_root: Path,
+    tmp_root: Path,
+    keep: set[Path] | None = None,
+) -> None:
+    """
+    Generate a site-only page that visualizes per-case ChFiDS model artifacts.
+
+    The page reads the oracle JSON for case ids, then loads:
+      - public/occt/artifacts/fillets/<case>/model.json
+    """
+    mdx = """---
+title: "ChFiDS Model Explorer"
+tableOfContents: false
+---
+
+import ChFiDSModelExplorer from '../../../../components/ChFiDSModelExplorer.astro';
+
+This page visualizes a ChFiDS data-model export (work-in-progress).
+
+<ChFiDSModelExplorer oracleUrl="/occt/oracles/fillets.json" />
+"""
+
+    dst = dest_root / "walkthroughs" / "chfids-model-explorer.mdx"
+    write_text_atomic(dst, mdx, tmp_root=tmp_root, keep=keep)
 
 
 def main() -> int:
@@ -421,44 +482,90 @@ def main() -> int:
         raise SystemExit(f"Missing Starlight docs dir: {docs_root}")
 
     dest_root = docs_root / args.dest_subdir
-    if args.clean and dest_root.exists():
-        shutil.rmtree(dest_root)
     dest_root.mkdir(parents=True, exist_ok=True)
     tmp_root = site_root / ".sync_tmp"
     occt_tag = detect_occt_tag(repo_root)
+    keep: set[Path] | None = set() if args.clean else None
 
     # Landing page for the OCCT section.
     overview_src = repo_root / "notes" / "overview.md"
     overview_dst = dest_root / "index.md"
     if not overview_src.is_file():
         raise SystemExit(f"Missing source overview: {overview_src}")
-    copy_file(overview_src, overview_dst, tmp_root=tmp_root, src_rel="overview.md", occt_tag=occt_tag)
+    copy_file(
+        overview_src,
+        overview_dst,
+        tmp_root=tmp_root,
+        src_rel="overview.md",
+        dst_rel="index.md",
+        occt_tag=occt_tag,
+        keep=keep,
+    )
 
     copied = 0
-    copied += copy_glob(repo_root / "notes", "maps/*.md", dest_root, tmp_root=tmp_root, occt_tag=occt_tag)
-    copied += copy_glob(repo_root / "notes", "dossiers/*.md", dest_root, tmp_root=tmp_root, occt_tag=occt_tag)
+    copied += copy_glob(repo_root / "notes", "maps/*.md", dest_root, tmp_root=tmp_root, occt_tag=occt_tag, keep=keep)
+    copied += copy_glob(repo_root / "notes", "dossiers/*.md", dest_root, tmp_root=tmp_root, occt_tag=occt_tag, keep=keep)
     copied += copy_glob(
         repo_root / "notes" / "walkthroughs",
         "*.md",
         dest_root / "walkthroughs",
         tmp_root=tmp_root,
         occt_tag=occt_tag,
+        dst_rel_prefix="walkthroughs",
+        keep=keep,
     )
-    copied += copy_glob(repo_root / "repros", "*/README.md", dest_root / "repros", tmp_root=tmp_root, occt_tag=occt_tag)
+    copied += copy_glob(
+        repo_root / "repros",
+        "*/README.md",
+        dest_root / "repros",
+        tmp_root=tmp_root,
+        occt_tag=occt_tag,
+        dst_rel_prefix="repros",
+        keep=keep,
+    )
     copied += copy_glob(
         repo_root / "backlog",
         "docs/*.md",
         dest_root / "backlog",
         tmp_root=tmp_root,
         occt_tag=occt_tag,
+        dst_rel_prefix="backlog",
+        keep=keep,
     )
 
     # Site-only generated interactive pages (not present in repo docs).
     try:
-        write_fillets_oracle_explorer(repo_root=repo_root, dest_root=dest_root, tmp_root=tmp_root, occt_tag=occt_tag)
+        write_fillets_oracle_explorer(
+            repo_root=repo_root,
+            site_root=site_root,
+            dest_root=dest_root,
+            tmp_root=tmp_root,
+            occt_tag=occt_tag,
+            keep=keep,
+        )
     except Exception:
         # Don't fail sync if the interactive helper generation fails; the core docs are more important.
         pass
+
+    try:
+        write_chfids_model_explorer(
+            repo_root=repo_root,
+            site_root=site_root,
+            dest_root=dest_root,
+            tmp_root=tmp_root,
+            keep=keep,
+        )
+    except Exception:
+        pass
+
+    if keep is not None:
+        # Delete stale docs after we've written the fresh tree, to avoid transient missing slugs in dev.
+        for p in dest_root.rglob("*"):
+            if not p.is_file():
+                continue
+            rp = p.resolve()
+            if rp not in keep:
+                p.unlink()
 
     print(f"[ok] Synced {copied + 1} markdown files into {dest_root} (occt tag: {occt_tag})")
     return 0

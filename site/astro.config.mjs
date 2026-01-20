@@ -17,6 +17,26 @@ export default defineConfig({
 		mermaid({ autoTheme: true }),
 		starlight({
 			title: 'OCCT Research',
+			customCss: ['/src/custom.css'],
+			head: [
+				{
+					tag: 'script',
+					attrs: { type: 'importmap' },
+					content: JSON.stringify(
+						{
+							imports: {
+								three: 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js',
+								'three/examples/jsm/controls/OrbitControls.js':
+									'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/controls/OrbitControls.js',
+								'three/examples/jsm/environments/RoomEnvironment.js':
+									'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/environments/RoomEnvironment.js',
+							},
+						},
+						null,
+						2
+					),
+				},
+			],
 			sidebar: [
 				{ label: 'Start', items: [{ label: 'Overview', slug: 'occt' }] },
 				{
@@ -73,11 +93,17 @@ export default defineConfig({
 								{ label: 'Lane Map', slug: 'occt/maps/lane-fillets' },
 								{ label: 'Dossier', slug: 'occt/dossiers/lane-fillets' },
 								{ label: 'Algorithm (ChFi3d)', slug: 'occt/dossiers/algorithm-fillets-chfi3d' },
+								{ label: 'Data Model (ChFiDS)', slug: 'occt/dossiers/algorithm-fillets-chfids-data-model' },
 								{ label: 'Walkthrough', slug: 'occt/walkthroughs/fillets' },
 								{ label: 'Cases', slug: 'occt/walkthroughs/fillets-cases' },
 								{ label: 'Explorer', slug: 'occt/walkthroughs/fillets-explorer' },
+								{ label: 'ChFiDS Model Explorer', slug: 'occt/walkthroughs/chfids-model-explorer' },
 								{ label: 'Repro', slug: 'occt/repros/lane-fillets/readme' },
 							],
+						},
+						{
+							label: 'Draw Harness',
+							items: [{ label: 'Sessions', slug: 'guides/draw-sessions' }],
 						},
 						{
 							label: 'Shape Healing + Analysis',

@@ -1,6 +1,5 @@
 import chokidar from 'chokidar';
 import { spawn } from 'node:child_process';
-import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -8,7 +7,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
 const repoRoot = path.resolve(siteRoot, '..');
-const docsRoot = path.join(siteRoot, 'src', 'content', 'docs');
 
 function spawnChecked(command, args, options) {
 	return new Promise((resolve, reject) => {
@@ -19,26 +17,6 @@ function spawnChecked(command, args, options) {
 			else reject(new Error(`${command} ${args.join(' ')} exited with code ${code}`));
 		});
 	});
-}
-
-async function listFilesRecursive(rootDir) {
-	const out = [];
-	async function walk(dir) {
-		let entries;
-		try {
-			entries = await readdir(dir, { withFileTypes: true });
-		} catch {
-			return;
-		}
-		for (const ent of entries) {
-			const full = path.join(dir, ent.name);
-			if (ent.isDirectory()) await walk(full);
-			else if (ent.isFile()) out.push(path.relative(rootDir, full));
-		}
-	}
-	await walk(rootDir);
-	out.sort();
-	return out;
 }
 
 let astro = null;
@@ -71,7 +49,6 @@ async function stopAstro() {
 let syncing = false;
 let syncQueued = false;
 let syncTimer = null;
-let lastDocsSnapshot = null;
 
 async function syncOnce() {
 	if (syncing) {
@@ -80,16 +57,16 @@ async function syncOnce() {
 	}
 	syncing = true;
 	try {
-		await spawnChecked('npm', ['run', 'sync'], { cwd: siteRoot });
-		const after = await listFilesRecursive(docsRoot);
-		const afterKey = after.join('\n');
-
-		if (lastDocsSnapshot && lastDocsSnapshot !== afterKey) {
-			console.log('[watch] docs tree changed; restarting astro dev server...');
+		// Avoid transient "slug does not exist" errors from Starlight when docs are
+		// being regenerated while the dev server is running.
+		if (astro) {
+			console.log('[watch] syncing docs; restarting astro...');
 			await stopAstro();
-			startAstro();
+		} else {
+			console.log('[watch] syncing docs...');
 		}
-		lastDocsSnapshot = afterKey;
+		await spawnChecked('npm', ['run', 'sync'], { cwd: siteRoot });
+		if (!astro) startAstro();
 	} finally {
 		syncing = false;
 		if (syncQueued) {
@@ -124,8 +101,6 @@ const ignored = [
 
 console.log('[watch] initial sync...');
 await syncOnce();
-
-startAstro();
 
 const watcher = chokidar.watch(watchTargets, {
 	ignoreInitial: true,

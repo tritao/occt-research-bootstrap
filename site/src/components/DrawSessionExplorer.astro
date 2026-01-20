@@ -1,0 +1,73 @@
+---
+interface Props {}
+
+const baseUrl = String(import.meta.env.BASE_URL || '/');
+const basePrefix = baseUrl === '/' ? '' : baseUrl.replace(/\/$/, '');
+const widgetSrc = `${basePrefix}/widgets/drawSessionExplorer.js`;
+---
+
+<div class="dse not-content" data-dse>
+  <p class="dse__hint">
+    This page visualizes DRAW-harness sessions captured as <code>.brep</code> snapshots and published as <code>.mesh.json</code>.
+  </p>
+
+  <div class="dse__controls">
+    <label class="dse__label">
+      <span>Session</span>
+      <select data-dse-session></select>
+    </label>
+    <label class="dse__label">
+      <span>Step</span>
+      <select data-dse-step></select>
+    </label>
+    <div class="dse__options">
+      <label class="ui-control">
+        <input type="checkbox" data-dse-wireframe />
+        <span>Wireframe</span>
+      </label>
+      <label class="ui-control">
+        <input type="checkbox" data-dse-edges checked />
+        <span>Edges</span>
+      </label>
+      <button type="button" class="ui-btn" data-dse-fit>Fit</button>
+      <button type="button" class="ui-btn" data-dse-reset>Reset</button>
+      <span data-dse-viewer-status class="dse__status"></span>
+    </div>
+  </div>
+
+  <div class="dse__viewer">
+    <div class="dse__viewerHead">
+      <strong>3D</strong>
+      <span data-dse-viewer-title class="dse__viewerTitle"></span>
+    </div>
+    <div data-dse-viewer class="dse__viewerCanvas"></div>
+  </div>
+
+  <details class="dse__log" data-dse-log-wrap style="display:none">
+    <summary>DRAW log</summary>
+    <pre data-dse-log></pre>
+  </details>
+</div>
+
+<style is:global>
+  .dse__controls { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin: 1rem 0; }
+  @media (min-width: 900px) { .dse__controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; } }
+  .dse__label { min-width: 0; }
+  .dse__label span { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+  .dse__label select { width: 100%; min-width: 0; max-width: 100%; }
+  .dse__options { grid-column: 1 / -1; display: flex; gap: 0.75rem; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+  @media (max-width: 899px) { .dse__options { justify-content: flex-start; } }
+  .dse__hint { margin: 0.5rem 0 0; }
+  .dse__status { color: var(--sl-color-gray-3); font-size: 0.9rem; }
+  .dse__viewer { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 0.75rem; background: var(--sl-color-black); }
+  .dse__viewerHead { display: flex; align-items: baseline; gap: 0.75rem; min-width: 0; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .dse__viewerTitle { color: var(--sl-color-gray-2); font-size: 0.9rem; min-width: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dse__viewerCanvas { width: 100%; height: 420px; border-radius: 0.5rem; overflow: hidden; }
+  @media (min-width: 900px) { .dse__viewerCanvas { height: 520px; } }
+  details.dse__log { margin-top: 1rem; border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 0.6rem 0.75rem; background: var(--sl-color-black); }
+  details.dse__log > summary { cursor: pointer; color: var(--sl-color-gray-2); font-weight: 600; }
+  details.dse__log pre { margin: 0.75rem 0 0; max-height: 420px; overflow: auto; font-size: 0.85rem; }
+</style>
+
+<script type="module" src={widgetSrc}></script>
+

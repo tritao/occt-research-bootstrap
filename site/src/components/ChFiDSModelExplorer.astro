@@ -1,0 +1,294 @@
+---
+interface Props {
+  oracleUrl?: string;
+  url?: string;
+}
+
+const oracleUrl = Astro.props.oracleUrl ?? Astro.props.url ?? '/occt/oracles/fillets.json';
+const baseUrl = String(import.meta.env.BASE_URL || '/');
+const basePrefix = baseUrl === '/' ? '' : baseUrl.replace(/\/$/, '');
+const widgetSrc = `${basePrefix}/widgets/chfidsModelExplorer.js`;
+---
+
+<div class="cme not-content" data-cme data-oracle-url={oracleUrl}>
+  <div class="cme__top">
+    <div class="cme__row cme__row--context">
+      <label class="cme__topLabel">
+        <span>Case</span>
+        <select data-cme-case></select>
+      </label>
+
+      <div class="cme__topLabel">
+        <span>Mesh</span>
+        <div class="cme__segment" role="group" aria-label="Mesh mode">
+          <label class="cme__seg">
+            <input type="radio" name="cme-mesh-mode" value="auto" checked data-cme-mesh-mode />
+            <span>Auto</span>
+          </label>
+          <label class="cme__seg">
+            <input type="radio" name="cme-mesh-mode" value="result" data-cme-mesh-mode />
+            <span>Result</span>
+          </label>
+          <label class="cme__seg">
+            <input type="radio" name="cme-mesh-mode" value="input" data-cme-mesh-mode />
+            <span>Input</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="cme__row cme__row--tour">
+      <div class="cme__tourControls">
+        <label class="cme__topLabel cme__tourSelect">
+          <span>Tour</span>
+          <select data-cme-step></select>
+        </label>
+        <div class="cme__tourBtns">
+          <button type="button" class="ui-btn" data-cme-step-prev>Prev</button>
+          <button type="button" class="ui-btn" data-cme-step-next>Next</button>
+          <button type="button" class="ui-btn" data-cme-tour-highlight>Highlight</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cme__row cme__row--viz">
+      <div class="cme__group">
+        <div class="cme__groupTitle">Overlays</div>
+        <div class="cme__groupBody">
+          <label class="ui-control">
+            <input type="checkbox" checked data-cme-show-spines />
+            <span>Spine</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" checked data-cme-show-patches />
+            <span>Patches</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" checked data-cme-show-interferences />
+            <span>Interferences</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-show-faces />
+            <span>Support faces</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-show-points />
+            <span>CommonPoints</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-show-point-links />
+            <span>CommonPoint links</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="cme__group">
+        <div class="cme__groupTitle">Render</div>
+        <div class="cme__groupBody">
+          <label class="ui-control">
+            <input type="checkbox" checked data-cme-toggle-base />
+            <span>Base mesh</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-edges checked />
+            <span>Edges</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-wireframe />
+            <span>Wireframe</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-axes />
+            <span>Axes</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-cme-grid checked />
+            <span>Grid</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="cme__group">
+        <div class="cme__groupTitle">Actions</div>
+        <div class="cme__groupBody">
+          <button type="button" class="ui-btn" data-cme-fit>Fit</button>
+          <button type="button" class="ui-btn" data-cme-reset>Reset</button>
+          <details class="cme__adv">
+            <summary>Advanced</summary>
+            <div class="cme__advBody">
+              <label class="ui-control">
+                <input type="checkbox" data-cme-guided />
+                <span>Guided mode</span>
+              </label>
+              <label class="ui-control">
+                <input type="checkbox" data-cme-show-aux />
+                <span>Show Aux stripes</span>
+              </label>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <span data-cme-viewer-status class="cme__status"></span>
+    </div>
+  </div>
+
+  <div class="cme__grid">
+    <aside class="cme__left">
+      <div class="cme__card cme__tourCard">
+        <div class="cme__cardHead">
+          <h3 class="cme__cardTitle" data-cme-tour-title>Tour</h3>
+        </div>
+        <div class="cme__cardBody">
+          <div class="cme__tourBody" data-cme-tour-body></div>
+        </div>
+      </div>
+      <div class="cme__card">
+        <div class="cme__cardHead">
+          <h3 class="cme__cardTitle">Model tree</h3>
+          <span class="cme__muted">Stripe → Spine → SurfData</span>
+        </div>
+        <div class="cme__cardBody">
+          <div data-cme-tree class="cme__tree"></div>
+        </div>
+      </div>
+      <div class="cme__card" data-cme-corners-wrap style="display:none">
+        <div class="cme__cardHead">
+          <h3 class="cme__cardTitle">Corners</h3>
+          <span class="cme__muted">Stripe ends meeting at a vertex</span>
+        </div>
+        <div class="cme__cardBody">
+          <div class="cme__muted" data-cme-corners-note></div>
+          <div data-cme-corners class="cme__corners"></div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="cme__center">
+      <div class="cme__viewer">
+        <div class="cme__viewerHead">
+          <strong>3D</strong>
+          <span data-cme-viewer-title class="cme__viewerTitle"></span>
+          <span data-cme-legend class="cme__legend"></span>
+        </div>
+        <div data-cme-viewer class="cme__viewerCanvas"></div>
+        <div class="cme__timelineWrap">
+          <div class="cme__timelineTitle">
+            <span>Spine timeline</span>
+            <span class="cme__muted" data-cme-timeline-range></span>
+          </div>
+          <div data-cme-timeline class="cme__timeline" role="list"></div>
+          <div data-cme-timeline-help class="cme__muted cme__timelineHelp"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="cme__right">
+      <div class="cme__card">
+        <div class="cme__cardHead">
+          <h3 class="cme__cardTitle">Inspector</h3>
+          <span class="cme__muted" data-cme-inspector-kind></span>
+        </div>
+        <div class="cme__cardBody">
+          <div data-cme-inspector class="cme__inspector"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<style is:global>
+  .cme__top { display: grid; gap: 0.75rem; padding: 0.9rem; border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; background: var(--sl-color-black); }
+  .cme__row { min-width: 0; }
+  .cme__row--context,
+  .cme__row--tour {
+    display: grid;
+    grid-template-columns: minmax(18rem, 1fr) auto;
+    align-items: end;
+    gap: 0.75rem;
+  }
+  @media (max-width: 720px) {
+    .cme__row--context,
+    .cme__row--tour {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+  .cme__row--viz { display: flex; align-items: start; gap: 1rem; flex-wrap: wrap; }
+  .cme__topLabel { display: grid; gap: 0.25rem; min-width: 0; }
+  .cme__topLabel > span { font-weight: 600; font-size: 0.85rem; color: var(--sl-color-gray-2); }
+  .cme__topLabel select { width: 100%; min-width: 0; height: var(--ui-control-h); }
+  .cme__tourControls { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0.75rem; }
+  @media (max-width: 720px) { .cme__tourControls { grid-template-columns: 1fr; align-items: start; } }
+  .cme__tourBtns { display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+
+  .cme__segment { display: inline-flex; border: 1px solid var(--sl-color-gray-5); border-radius: 0.6rem; overflow: hidden; height: var(--ui-control-h); }
+  .cme__seg { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0 0.75rem; cursor: pointer; user-select: none; height: var(--ui-control-h); }
+  .cme__seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .cme__seg span { font-size: 0.9rem; line-height: 1; color: var(--sl-color-gray-2); }
+  .cme__seg:has(input:checked) { background: rgba(99, 102, 241, 0.16); }
+  .cme__seg:has(input:checked) span { color: var(--sl-color-gray-1); }
+  .cme__seg:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.08); }
+
+  .cme__group { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 0.6rem 0.7rem; min-width: 16rem; flex: 1 1 18rem; }
+  .cme__groupTitle { font-weight: 700; font-size: 0.85rem; color: var(--sl-color-gray-2); margin-bottom: 0.35rem; }
+  .cme__groupBody { display: flex; gap: 0.5rem 0.75rem; flex-wrap: wrap; align-items: center; }
+  .cme__status { color: var(--sl-color-gray-3); font-size: 0.9rem; justify-self: end; }
+
+  .cme__adv { margin: 0; }
+  .cme__adv > summary { cursor: pointer; color: var(--sl-color-gray-2); font-size: 0.9rem; list-style: none; }
+  .cme__adv > summary::-webkit-details-marker { display: none; }
+  .cme__advBody { margin-top: 0.35rem; }
+  .cme__grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; }
+  @media (min-width: 1100px) { .cme__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr) minmax(0, 1fr); align-items: start; } }
+  .cme__left, .cme__right { display: grid; gap: 1rem; }
+
+  .cme__viewer { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 0.75rem; background: var(--sl-color-black); }
+  .cme__viewerHead { display: flex; align-items: baseline; gap: 0.75rem; min-width: 0; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .cme__viewerTitle { color: var(--sl-color-gray-2); font-size: 0.9rem; min-width: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cme__viewerCanvas { width: 100%; height: 520px; border-radius: 0.5rem; overflow: hidden; }
+  @media (max-width: 720px) { .cme__viewerCanvas { height: 420px; } }
+
+  .cme__legend { display: inline-flex; gap: 0.5rem; flex-wrap: wrap; }
+  .cme__legendItem { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--sl-color-gray-2); }
+  .cme__swatch { width: 0.85rem; height: 0.55rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.18); background: var(--swatch, #888); }
+
+  .cme__corners { display: grid; gap: 0.35rem; margin-top: 0.5rem; }
+  .cme__cornerBtn { text-align: left; width: 100%; }
+
+  .cme__timelineWrap { margin-top: 0.75rem; border-top: 1px solid var(--sl-color-gray-5); padding-top: 0.75rem; }
+  .cme__timelineTitle { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; color: var(--sl-color-gray-2); font-weight: 600; }
+  .cme__timeline { display: flex; gap: 2px; height: 18px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
+  .cme__timelineHelp { margin-top: 0.35rem; }
+  .cme__seg { height: 100%; background: var(--seg, rgba(127,180,255,0.5)); cursor: pointer; flex: 1 1 0; }
+  .cme__seg[aria-selected="true"] { outline: 2px solid var(--sl-color-accent); outline-offset: -2px; }
+
+  .cme__card { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; background: var(--sl-color-black); overflow: hidden; }
+  .cme__cardHead { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 0.85rem; border-bottom: 1px solid var(--sl-color-gray-5); }
+  .cme__cardTitle { margin: 0; font-size: 1.02rem; }
+  .cme__cardBody { padding: 0.75rem 0.85rem; }
+  .cme__muted { color: var(--sl-color-gray-3); font-size: 0.85rem; }
+
+  .cme__tourBody p { margin: 0 0 0.5rem; color: var(--sl-color-gray-2); }
+  .cme__tourBody ul { margin: 0.25rem 0 0; padding-left: 1.1rem; }
+  .cme__tourBody li { margin: 0.15rem 0; color: var(--sl-color-gray-2); }
+
+  .cme__tree { display: grid; gap: 0.5rem; }
+  .cme__tree details { border: 1px solid var(--sl-color-gray-5); border-radius: 0.6rem; padding: 0.5rem 0.6rem; }
+  .cme__tree summary { cursor: pointer; font-weight: 600; color: var(--sl-color-gray-2); }
+  .cme__treeList { display: grid; gap: 0.25rem; margin-top: 0.35rem; }
+  .cme__treeBtn { text-align: left; width: 100%; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--sl-color-gray-2); border-radius: 0.5rem; padding: 0.35rem 0.5rem; cursor: pointer; font-family: var(--sl-font-mono); font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .cme__treeBtn[aria-current="true"] { border-color: rgba(99, 102, 241, 0.55); background: rgba(99, 102, 241, 0.16); }
+  .cme__treeBtn.is-dimmed { opacity: 0.55; }
+  .cme__treeBtn.is-suggested { border-color: rgba(99, 102, 241, 0.8); box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3) inset; }
+  .cme__treeBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cme__badge { font-family: var(--sl-font-system); font-size: 0.72rem; padding: 0.05rem 0.4rem; border-radius: 999px; border: 1px solid rgba(99, 102, 241, 0.6); color: rgba(99, 102, 241, 0.95); background: rgba(99, 102, 241, 0.12); flex: 0 0 auto; }
+
+  .cme__inspector { display: grid; gap: 0.5rem; }
+  .cme__kv { display: grid; grid-template-columns: 14ch 1fr; gap: 0.25rem 0.6rem; font-family: var(--sl-font-mono); font-size: 0.85rem; }
+  .cme__k { color: var(--sl-color-gray-3); }
+  .cme__v { color: var(--sl-color-gray-2); overflow-wrap: anywhere; }
+
+</style>
+
+<script type="module" src={widgetSrc}></script>

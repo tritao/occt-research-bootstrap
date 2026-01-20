@@ -16,9 +16,8 @@ cxx="${CXX:-g++}"
   -I"$CSF_OCCTIncludePath" \
   "$REPRO_DIR/fillets.cpp" \
   -L"$CSF_OCCTLibPath" \
-  -lTKFillet -lTKBO -lTKBool -lTKTopAlgo -lTKGeomAlgo -lTKBRep -lTKPrim -lTKGeomBase -lTKG3d -lTKG2d -lTKMath -lTKShHealing -lTKernel \
+  -lTKFillet -lTKBO -lTKBool -lTKTopAlgo -lTKGeomAlgo -lTKBRep -lTKPrim -lTKGeomBase -lTKG3d -lTKG2d -lTKMath -lTKMesh -lTKShHealing -lTKernel \
   -o "$REPRO_DIR/build/fillets"
 
-"$REPRO_DIR/build/fillets" > "$REPRO_DIR/golden/fillets.json"
+"$REPRO_DIR/build/fillets" --artifacts-dir "$REPRO_DIR/golden/artifacts" > "$REPRO_DIR/golden/fillets.json"
 echo "wrote $REPRO_DIR/golden/fillets.json"
-

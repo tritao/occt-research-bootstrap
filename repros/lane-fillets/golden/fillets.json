@@ -5,6 +5,8 @@
   },
   "inputs": {
     "box": { "bbox": { "is_void": false, "min": [-9.9999999999999995e-08, -9.9999999999999995e-08, -9.9999999999999995e-08], "max": [10.000000099999999, 10.000000099999999, 10.000000099999999] }, "counts": { "solids": 1, "faces": 6, "edges": 12, "vertices": 8 } }
+    ,
+    "cylinder_split": { "bbox": { "is_void": false, "min": [-5.0000001000000003, -5.0000001000000003, -9.9999999999999995e-08], "max": [5.0000001000000003, 5.0000001000000003, 10.000000099999999] }, "counts": { "solids": 1, "faces": 4, "edges": 6, "vertices": 4 } }
   },
   "cases": {
     "single_edge_radius_1": {
@@ -37,6 +39,15 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/single_edge_radius_1/input.mesh.json",
+        "result_mesh": "artifacts/single_edge_radius_1/result.mesh.json",
+        "bad_mesh": "artifacts/single_edge_radius_1/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
       }
     },
     "corner_3_edges_radius_1": {
@@ -71,6 +82,56 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/corner_3_edges_radius_1/input.mesh.json",
+        "result_mesh": "artifacts/corner_3_edges_radius_1/result.mesh.json",
+        "bad_mesh": "artifacts/corner_3_edges_radius_1/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
+      }
+    },
+    "cylinder_split_rim_radius_1": {
+      "kind": "fillet",
+      "params": { "radius": 1 },
+      "selection": { "edges_added": 2 },
+      "build": {
+        "did_throw": false,
+        "exception": "",
+        "is_done": true,
+        "nb_contours": 1,
+        "nb_surfaces": 4,
+        "nb_faulty_contours": 0,
+        "faulty_contours": [],
+        "nb_faulty_vertices": 0,
+        "faulty_vertices": [],
+        "has_result": false,
+        "generated_faces_from_selected_edges": 2,
+        "contours": [
+          {"ic": 1, "nb_edges": 2, "edge_indices": [4, 6], "nb_surf": 2, "stripe_status": 0, "stripe_status_name": "ChFiDS_Ok", "nb_computed_surfaces": 2, "computed_surface_types": {"Geom_ToroidalSurface": 2}}
+        ]
+      },
+      "result": {
+        "is_valid": true,
+        "counts": { "solids": 1, "faces": 6, "edges": 10, "vertices": 6 },
+        "bbox": { "is_void": false, "min": [-5.4119611014619702, -5.4119611014619702, -9.9999999999999995e-08], "max": [5.4119611014619702, 5.4119611014619702, 10.000000099999999] },
+        "surface_types": {"Geom_CylindricalSurface": 2, "Geom_Plane": 2, "Geom_ToroidalSurface": 2}
+      },
+      "partial_result": {
+        "has_bad_shape": false,
+        "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
+        "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/cylinder_split_rim_radius_1/input.mesh.json",
+        "result_mesh": "artifacts/cylinder_split_rim_radius_1/result.mesh.json",
+        "bad_mesh": "artifacts/cylinder_split_rim_radius_1/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
       }
     },
     "single_edge_var_radius_0_5_to_2": {
@@ -103,6 +164,15 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/single_edge_var_radius_0_5_to_2/input.mesh.json",
+        "result_mesh": "artifacts/single_edge_var_radius_0_5_to_2/result.mesh.json",
+        "bad_mesh": "artifacts/single_edge_var_radius_0_5_to_2/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
       }
     },
     "single_edge_radius_100": {
@@ -135,6 +205,15 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/single_edge_radius_100/input.mesh.json",
+        "result_mesh": "artifacts/single_edge_radius_100/result.mesh.json",
+        "bad_mesh": "artifacts/single_edge_radius_100/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": false,
+        "wrote_bad": false
       }
     },
     "single_edge_chamfer_dist_1": {
@@ -167,6 +246,15 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/single_edge_chamfer_dist_1/input.mesh.json",
+        "result_mesh": "artifacts/single_edge_chamfer_dist_1/result.mesh.json",
+        "bad_mesh": "artifacts/single_edge_chamfer_dist_1/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
       }
     },
     "corner_3_edges_chamfer_dist_1": {
@@ -201,6 +289,15 @@
         "has_bad_shape": false,
         "bad_shape_counts": { "solids": 0, "faces": 0, "edges": 0, "vertices": 0 },
         "bad_shape_bbox": { "is_void": true }
+      },
+      "artifacts": {
+        "enabled": true,
+        "input_mesh": "artifacts/corner_3_edges_chamfer_dist_1/input.mesh.json",
+        "result_mesh": "artifacts/corner_3_edges_chamfer_dist_1/result.mesh.json",
+        "bad_mesh": "artifacts/corner_3_edges_chamfer_dist_1/bad.mesh.json",
+        "wrote_input": true,
+        "wrote_result": true,
+        "wrote_bad": false
       }
     }
   }

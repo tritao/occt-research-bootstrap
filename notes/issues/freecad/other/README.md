@@ -1,0 +1,121 @@
+# Other Issues (in this project view)
+
+- Issues: `115`
+
+## List
+
+- `#5566`: `05566-add-visual-indication-progress-bar-when-long-tasks-are-performed.md` — Add visual indication (progress bar) when long tasks are performed
+- `#5581`: `05581-multi-core-multithreaded-support.md` — Multi-core/Multithreaded support
+- `#5622`: `05622-occ-freecad-warns-when-applying-thickness-brepalgo-image-bind.md` — OCC: FreeCAD warns when applying thickness "BRepAlgo_Image::Bind"
+- `#5642`: `05642-crash-when-creating-loft-between-two-sketches.md` — Crash when creating loft between two sketches
+- `#5687`: `05687-brepoffsetapi-makepipeshellpy-setauxiliaryspine-problems.md` — BRepOffsetAPI_MakePipeShellPy.setAuxiliarySpine problems
+- `#5783`: `05783-crash-with-step-export-upstream-occ-bug.md` — Crash with STEP export (Upstream OCC bug)
+- `#5824`: `05824-geomapi-extremacurvecurve-fails-to-detect-intersection-upstream-occt-bug.md` — GeomAPI_ExtremaCurveCurve fails to detect intersection (upstream OCCT bug)
+- `#6044`: `06044-crash-on-a-loft-command-with-incorrect-input-occ-bug.md` — Crash on a loft command with incorrect input (OCC bug)
+- `#6130`: `06130-partdesign-loft-between-sketches-with-inner-and-outer-elements-created-in-differ.md` — PartDesign: Loft between sketches with inner and outer elements created in different order results in bad 3D geometry
+- `#6196`: `06196-thickness-fails-on-simple-shapes-brep-api-command-not-done-regression-from-0-19.md` — Thickness fails on simple shapes (BRep_API command not done) - regression from 0.19.24267
+- `#6203`: `06203-problem-techdraw-not-drawing-all-lines-in-view.md` — [Problem] TechDraw: not drawing all lines in view
+- `#6281`: `06281-partdesign-issue-with-linear-pattern-when-replicating-an-additive-pipe-based-on.md` — PartDesign: Issue with Linear Pattern when replicating an Additive Pipe based on an elliptical path
+- `#6319`: `06319-crash-when-creating-sweep-fix-pending-on-the-upstream-release-of-occ-7-8.md` — Crash when creating sweep (fix pending on the upstream release of OCC 7.8)
+- `#6538`: `06538-crash-in-making-2d-offset-of-a-circle.md` — [crash] in making 2D offset of a circle
+- `#8176`: `08176-partdesign-broken-paradoxical-impossible-geometry-generated-via-double-rectangul.md` — PartDesign: Broken (paradoxical/impossible) geometry generated via double rectangular pocket (due to elusive OCC bug)
+- `#8587`: `08587-partdesign-taper-function-error-in-occ.md` — PartDesign: Taper function error (in OCC)
+- `#9760`: `09760-problem-regression-on-tonurbs-update-fixed-in-occt-7-9-0.md` — [Problem] Regression on toNurbs() (Update: fixed in OCCT 7.9.0)
+- `#10435`: `10435-problem-draft-draft-offset-has-multiple-issues.md` — [Problem] Draft: Draft_Offset has multiple issues
+- `#10494`: `10494-sketcher-partdesign-pocket-doesn-t-throw-error-when-used-on-invalid-sketch-conta.md` — Sketcher/PartDesign: Pocket doesn't throw error when used on invalid sketch containing B-spline
+- `#11836`: `11836-chamfering-crash-occ-bug.md` — Chamfering crash (OCC bug)
+- `#12245`: `12245-occ-shape-generation-randomly-broken-on-a-complex-body.md` — OCC: Shape generation randomly broken on a complex body
+- `#12678`: `12678-problem-support-import-export-of-stpx-step-format.md` — [Problem] Support Import/Export of .stpx STEP format
+- `#13023`: `13023-error-when-importing-a-step-file.md` — Error when importing a step file
+- `#13224`: `13224-sketcher-offset-issues-with-single-line-selection-ovp-inconsistency-occ-related.md` — Sketcher: Offset issues with single line selection + OVP inconsistency (OCC related)
+- `#13355`: `13355-occ-strange-anomaly-after-polar-then-groove.md` — OCC: Strange anomaly after polar-then-groove
+- `#13699`: `13699-sketcher-b-spline-coming-out-as-straight-line-in-print.md` — Sketcher: B-spline coming out as straight line in print
+- `#14379`: `14379-partdesign-subshapebinder-offset-creates-3d-surface-from-planar-face-regression.md` — PartDesign: Subshapebinder offset creates 3D surface from planar face (Regression)
+- `#14588`: `14588-partdesign-pocket-operation-introducing-strange-artifact.md` — PartDesign: Pocket operation introducing strange artifact
+- `#14640`: `14640-additive-loft-operation-causes-segmentation-fault-occ-bug.md` — Additive Loft operation causes Segmentation fault (OCC bug)
+- `#14901`: `14901-partdesign-subtractive-helix-sometimes-adds-instead-of-subtracting.md` — PartDesign: Subtractive helix sometimes adds instead of subtracting
+- `#15018`: `15018-partdesign-polar-pattern-doesn-t-work-on-subtractive-helix-bug-is-in-occ-and-nee.md` — PartDesign: Polar pattern doesn't work on subtractive helix (bug is in OCC and needs more sleuthing)
+- `#15151`: `15151-sketcher-offset-doesn-t-support-b-splines.md` — Sketcher: Offset doesn't support B-splines
+- `#15452`: `15452-partdesign-pocket-through-revolve-creates-a-skin-of-the-pocket-on-one-side.md` — PartDesign: Pocket through revolve creates a "skin" of the pocket on one side
+- `#15685`: `15685-problem-importing-step-file-re-exported-from-another-application.md` — Problem importing STEP file (re-exported from another application)
+- `#15700`: `15700-partdesign-pocket-circle-hole-not-done-on-revolution-seam-but-appears-on-polar-p.md` — PartDesign: Pocket circle hole not done on revolution seam but appears on polar pattern
+- `#16206`: `16206-occ-thickness-shelling-failed.md` — OCC: Thickness shelling failed
+- `#16495`: `16495-cam-deburr-operation-on-edges-fails-in-some-cases.md` — CAM: Deburr operation on edges fails in some cases
+- `#16898`: `16898-techdraw-cross-sectioning-a-drawing-displays-a-series-of-erroneous-circles.md` — TechDraw: Cross-sectioning a drawing displays a series of erroneous circles
+- `#17338`: `17338-part-boolean-union-fusion-fills-spaces-where-no-part-exists.md` — Part: Boolean Union / Fusion fills spaces where no part exists
+- `#17392`: `17392-partdesign-applying-a-pattern-to-a-curved-pipe-can-produce-incorrect-geometry-oc.md` — PartDesign: Applying a pattern to a curved pipe can produce incorrect geometry (OCC related)
+- `#17641`: `17641-partdesign-equal-sketches-in-multisection-additive-pipe-result-in-ignored-interm.md` — PartDesign: Equal sketches in multisection Additive Pipe result in ignored intermediate sections
+- `#17730`: `17730-partdesign-polarpattern-artifact.md` — PartDesign: PolarPattern artifact
+- `#17829`: `17829-partdesign-chamfering-end-of-helix-created-inner-thread-using-grove-tool-results.md` — PartDesign: Chamfering end of helix-created inner thread using grove tool results in broken face
+- `#18056`: `18056-step-export-to-step-crashes-every-time.md` — STEP: Export to step crashes every time
+- `#18058`: `18058-part-refine-breaks-intersection-curves.md` — Part: Refine breaks intersection curves
+- `#18078`: `18078-step-export-to-inch-is-creating-a-model-in-mm.md` — STEP: Export to inch is creating a model in mm
+- `#18108`: `18108-partdesign-additive-helix-with-negative-cone-angle-breaks-with-height-over-one-r.md` — PartDesign: Additive Helix with negative Cone Angle breaks with height over one revolution
+- `#18357`: `18357-ubuntu-24-04-occt-lib-dependency-issue-when-having-kicad-installed-in-parallel.md` — Ubuntu 24.04: OCCT lib dependency issue when having KiCAD installed in parallel
+- `#18445`: `18445-partdesign-crash-when-groove-around-the-wrong-axis.md` — PartDesign: Crash when groove around the wrong axis
+- `#18656`: `18656-partdesign-groove-not-performed-correctly-on-one-side-of-a-profile-regression-in.md` — PartDesign: Groove not Performed Correctly on One Side of a Profile (Regression introduced between r38728 and r39109)
+- `#18658`: `18658-part-self-intersecting-part-sweep-occ-related.md` — Part: Self intersecting Part::Sweep (OCC related)
+- `#18723`: `18723-exception-in-geometry-cpp-when-moving-cursor-around-in-sketcher-works-in-occt-v8.md` — Exception in Geometry.cpp when moving cursor around in Sketcher (Works in OCCT v8.7.1 but not in v8.6.3 or v8.7.2dev)
+- `#18735`: `18735-core-step-file-import-takes-excessive-time.md` — Core: STEP File Import Takes Excessive Time
+- `#18836`: `18836-part-2d-offset-fill-offset-bug-using-b-spline.md` — Part: 2D Offset - Fill Offset bug using B-spline
+- `#18861`: `18861-partdesign-pocket-command-gives-a-pad.md` — PartDesign: Pocket command gives a Pad
+- `#18879`: `18879-partdesign-additive-pipe-does-not-correctly-handle-self-intersection-occ-related.md` — PartDesign: Additive Pipe does not correctly handle self-intersection (OCC related)
+- `#18956`: `18956-occ-segfault-when-adding-offset-to-shapestring-subshapebinder.md` — OCC: Segfault when adding offset to shapestring subshapebinder
+- `#19128`: `19128-partdesign-recomputation-time-for-objects-is-progressively-increasing-memory-lea.md` — PartDesign: Recomputation time for objects is progressively increasing (memory leak?) ← Problem originates from OCC
+- `#19184`: `19184-part-design-and-part-thickness-fails-for-a-very-simple-revolution-feature-around.md` — Part Design and Part Thickness fails for a very simple revolution feature around Z axis, but not for X or Y axes
+- `#19329`: `19329-techdraw-crashing-and-sluggishness-when-inserting-views-of-a-simple-part.md` — TechDraw: Crashing and sluggishness when inserting views of a simple part
+- `#19403`: `19403-partdesign-segfault-on-mirrored-pattern-occ-related.md` — PartDesign: Segfault on mirrored pattern (OCC related)
+- `#19410`: `19410-partdesign-the-pad-does-not-work-properly-when-growing-inside-a-hollow-box.md` — PartDesign: The Pad does not work properly when growing inside a hollow box.
+- `#19587`: `19587-sketcher-offset-geometry-on-a-sketch-with-two-squares-hangs-freecad-on-macos-occ.md` — Sketcher: Offset geometry on a sketch with two squares hangs FreeCAD on macos (OCC related)
+- `#19745`: `19745-assembly-segfault-in-assembly-when-setting-advanced-offset-for-slide-joint.md` — Assembly: Segfault in assembly when setting "Advanced offset" for slide joint
+- `#19795`: `19795-support-step-ap242-ed1-ed2-ed3-ed4.md` — Support STEP AP242 ed1/ed2/ed3/ed4
+- `#19831`: `19831-sketcher-create-external-intersection-geometry-not-working-with-complex-surfaces.md` — Sketcher: Create external Intersection geometry not working with complex surfaces
+- `#19963`: `19963-sweep-and-frenet-additivepipe-on-arc-section-create-broken-geometry.md` — Sweep and Frenet AdditivePipe on arc Section create broken geometry
+- `#20112`: `20112-sketcher-cannot-offset-wye-star-lines.md` — Sketcher: cannot offset wye/star lines
+- `#20194`: `20194-measuring-distance-between-circles-centers-make-everything-crash.md` — Measuring distance between circles centers make everything crash
+- `#20546`: `20546-step-export-does-not-convert-dimensions.md` — STEP: Export Does Not Convert Dimensions
+- `#20588`: `20588-step-export-does-not-contain-all-the-geometry.md` — STEP Export does not contain all the geometry
+- `#20633`: `20633-part-findplane-regression-occ-related.md` — Part: findPlane regression (OCC related)
+- `#20718`: `20718-part-relevance-part-b-spline-weight-assignment-workaround-occt-related.md` — Part: Relevance Part B-spline weight assignment workaround (OCCT related)
+- `#21097`: `21097-part-refine-operation-breaks-threaded-shapes.md` — Part: Refine operation breaks threaded shapes
+- `#21119`: `21119-right-corner-pipe-sweep-errors-out-with-vast-majority-of-spines-featuring-arcs.md` — Right corner pipe/sweep errors out with vast majority of spines featuring arcs
+- `#21120`: `21120-occ-pipe-sweep-on-arc-spline-section-freezes-freecad-forever.md` — OCC: Pipe/sweep on arc/spline section freezes FreeCAD forever
+- `#21372`: `21372-partdesign-pocket-fails-on-solid-which-consists-of-a-revolve-a-groove-and-anothe.md` — PartDesign: Pocket fails on solid which consists of a revolve, a groove and another pocket
+- `#21527`: `21527-partdesign-additiveloft-fails-for-physically-small-construction-details-and-free.md` — PartDesign: AdditiveLOFT Fails for (physically) small construction details (and FreeCad  internally "Fails"). No problems observed for Big/Bigger construction details (OCC related)
+- `#21702`: `21702-partdesign-subshapebinder-offset-with-tangent-or-intersection-fails-for-simple-c.md` — PartDesign: SubShapeBinder offset with Tangent or Intersection fails for simple cases
+- `#21832`: `21832-part-fusion-of-polar-array-sweep-fails.md` — Part: Fusion of Polar Array & Sweep Fails
+- `#22030`: `22030-two-subtractive-helixes-generate-artifacts-occ-related.md` — Two subtractive helixes generate artifacts (OCC related)
+- `#22349`: `22349-assembly-export-of-gltf-and-other-ocaf2-formats-with-occt-7-9-0-omits-parts.md` — Assembly: Export of glTF and other OCAF2 formats with OCCT 7.9.0 omits parts.
+- `#22386`: `22386-partdesign-crash-while-attempting-subtractive-cone-occ-related-doesn-t-crash-in.md` — PartDesign: crash while attempting subtractive cone (OCC related; doesn't crash in OCC 8.0.0.rc1-7aa85582ad)
+- `#22580`: `22580-partdesign-crash-when-attempting-symmetric-pad-on-a-base-feature-created-from-st.md` — PartDesign: crash when attempting symmetric pad on a base feature created from STL (v1.1-dev)
+- `#22652`: `22652-sketcher-offset-creating-extra-lines-and-points.md` — Sketcher: Offset creating extra lines and points
+- `#22694`: `22694-partdesign-additive-pipe-does-not-preserve-base-geometry.md` — PartDesign: Additive pipe does not preserve base geometry
+- `#22734`: `22734-partdesign-unnecessary-edge-geometry-after-pocketing-curved-surface.md` — PartDesign: Unnecessary edge geometry after pocketing curved surface?
+- `#22737`: `22737-partdesign-enabling-refine-causes-walls-to-return.md` — PartDesign: enabling refine causes walls to return
+- `#22950`: `22950-partdesign-hole-tool-fails-to-create-hole-on-seam-of-sloped-face.md` — PartDesign: hole tool fails to create hole on seam of sloped face
+- `#23484`: `23484-part-cutting-a-sphere-from-a-block-does-not-work-occ-related.md` — Part: Cutting a sphere from a block does not work (OCC related)
+- `#23498`: `23498-cam-camtests-testpathoputil-testpathoputil-test46-test47-fail-with-occ-7-9-1-and.md` — CAM: CAMTests.TestPathOpUtil.TestPathOpUtil.test46 / test47 fail with OCC 7.9.1 and 7.9.2
+- `#23698`: `23698-multi-pocket-in-a-body-results-in-a-glitch.md` — Multi-pocket in a Body results in a glitch
+- `#23765`: `23765-pocket-null-shape-on-thickness-use.md` — Pocket: Null shape .  On Thickness  use
+- `#23975`: `23975-partdesign-crash-whenever-linear-pattern-iterations-reaches-10.md` — PartDesign: Crash whenever linear pattern iterations reaches 10
+- `#24111`: `24111-occ-part-section-returns-infinite-bounding-box-for-parts-that-don-t-actually-tou.md` — OCC: `part.section` returns infinite bounding box for parts that don't actually touch
+- `#24115`: `24115-occ-part-section-returns-incomplete-and-wrong-results.md` — OCC: `part.section` returns incomplete (and wrong) results
+- `#24132`: `24132-partdesign-thickness-fail-when-there-are-round-corners.md` — PartDesign: Thickness fail when there are round corners.
+- `#24342`: `24342-partdesign-pipe-does-not-work-fine-when-the-sketch-is-inclined-operation-and-pre.md` — PartDesign: Pipe does not work fine when the Sketch is inclined - Operation and Preview are also not getting the same conclusion.
+- `#24431`: `24431-partdesign-pipe-does-not-produce-a-nice-feature-when-using-multisection.md` — PartDesign: Pipe does not produce a nice feature when using Multisection
+- `#24996`: `24996-partdesign-additivepipe-ignores-islands-in-profile-if-path-is-closed.md` — PartDesign: AdditivePipe ignores islands in profile if path is closed
+- `#25146`: `25146-techdraw-missing-edges-lines-accompanied-with-occ-fuse-warnings.md` — TechDraw: Missing edges/lines accompanied with OCC fuse warnings
+- `#25158`: `25158-occ-disttoshape-returns-positive-value-for-intersecting-parts.md` — OCC: distToShape returns positive value for intersecting parts
+- `#25161`: `25161-additive-loft-crashing-when-using-loft-parameters-closed.md` — Additive loft crashing when using "Loft parameters" "Closed"
+- `#25169`: `25169-part-boolean-common-failure-empty-result.md` — Part: Boolean Common – Failure (Empty Result)
+- `#25193`: `25193-occ-part-common-of-simple-shapes-returns-valid-volume-less-intersection-with-inf.md` — OCC: Part.common of simple shapes returns "valid" volume-less intersection with infinite bounds
+- `#25547`: `25547-partdesign-end-face-of-a-subtractivehelix-is-not-pocket-correct-occ-related.md` — PartDesign: End face of a SubtractiveHelix is not pocket correct (OCC related)
+- `#25761`: `25761-simple-pad-sketch-over-already-padded-sketch-geometry-creates-invalid-invisible.md` — Simple Pad->Sketch over already padded sketch geometry creates invalid/invisible result
+- `#25821`: `25821-recalculation-error-in-0-21-2-created-file.md` — Recalculation error in 0.21.2-created file
+- `#25899`: `25899-occ-pocket-fails-through-curved-surface-only-with-certain-precise-alignment.md` — OCC: Pocket fails through curved surface only with certain precise alignment.
+- `#25955`: `25955-assembly-failure-to-load-existing-file.md` — Assembly: Failure to load existing file
+- `#26142`: `26142-part-3d-offset-crashes-on-cloned-body.md` — Part: 3D Offset crashes on cloned body
+- `#26150`: `26150-partdesign-pocket-feature-produces-unexpected-results-on-a-complex-part.md` — PartDesign: Pocket feature produces unexpected results on a complex part
+- `#26161`: `26161-partdesign-subtractive-pipe-has-solid-sphere-in-right-angle-joints-when-exportin.md` — PartDesign: subtractive pipe has solid sphere in right angle joints when exporting to step or stl
+- `#26517`: `26517-partdesign-hollow-profile-on-additive-pipe-in-closed-path.md` — PartDesign: Hollow profile on Additive Pipe in closed path
+- `#27000`: `27000-part-projecting-a-regular-pentagonal-surface-onto-the-surface-of-a-sphere-does-n.md` — Part: Projecting a regular pentagonal surface onto the surface of a sphere does not work

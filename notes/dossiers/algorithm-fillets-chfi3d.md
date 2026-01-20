@@ -79,6 +79,9 @@ This lane’s internal state is spread across `ChFiDS` types that describe:
 2) the *band* of blend to build (stripe),
 3) the *piecewise surface patches + face interferences* (surf data).
 
+Recommended companion reading (focused on the data model, not the algorithm phases):
+- [Dossier: ChFiDS Data Model](algorithm-fillets-chfids-data-model.md)
+
 ### `ChFiDS_Spine` (the guideline)
 
 File: `occt/src/ChFiDS/ChFiDS_Spine.hxx`

@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "occt-research://schemas/fillets_chfids_model.schema.json",
+  "title": "OCCT Fillets ChFiDS Model Export (v1)",
+  "type": "object",
+  "required": ["format", "meta", "stripes"],
+  "properties": {
+    "format": {
+      "type": "string",
+      "const": "occt-research-chfids-model-v1"
+    },
+    "meta": { "$ref": "#/$defs/Meta" },
+    "stripes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Stripe" }
+    },
+    "surfaces": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SurfaceDecl" }
+    },
+    "faces": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FaceDecl" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Meta": {
+      "type": "object",
+      "required": ["case", "kind", "occt_version", "occt_dev"],
+      "properties": {
+        "case": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["fillet", "chamfer", "unknown"] },
+        "occt_version": { "type": "string" },
+        "occt_dev": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "FlatVec3List": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "type": "number" },
+      "description": "Flat list of 3D points [x0,y0,z0,x1,y1,z1,...]."
+    },
+    "Orientation": {
+      "type": "string",
+      "enum": ["FORWARD", "REVERSED", "INTERNAL", "EXTERNAL", "UNKNOWN"],
+      "description": "TopAbs_Orientation-like label (stringified)."
+    },
+    "FlatVec2List": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "type": "number" },
+      "description": "Flat list of 2D points [u0,v0,u1,v1,...]."
+    },
+    "FlatVec3ListMaybeEmpty": {
+      "anyOf": [
+        { "type": "array", "maxItems": 0 },
+        { "type": "array", "minItems": 6, "items": { "type": "number" } }
+      ],
+      "description": "Flat list of 3D points, or [] when not available."
+    },
+    "SpineEndpoints": {
+      "type": "object",
+      "required": ["first", "last"],
+      "properties": {
+        "first": { "anyOf": [{ "$ref": "#/$defs/Vec3" }, { "type": "null" }] },
+        "last": { "anyOf": [{ "$ref": "#/$defs/Vec3" }, { "type": "null" }] }
+      },
+      "additionalProperties": false
+    },
+    "SpineEdge": {
+      "type": "object",
+      "required": ["edge_index", "v1", "v2"],
+      "properties": {
+        "edge_index": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-based edge index in the contour/spine (matches oracle edge_indices convention)."
+        },
+        "v1": { "$ref": "#/$defs/Vec3" },
+        "v2": { "$ref": "#/$defs/Vec3" }
+      },
+      "additionalProperties": false
+    },
+    "Spine": {
+      "type": "object",
+      "required": ["edge_indices", "endpoints", "edges", "polyline_points", "breakpoints"],
+      "properties": {
+        "edge_indices": {
+          "type": "array",
+          "minItems": 0,
+          "items": { "type": "integer", "minimum": 1 }
+        },
+        "endpoints": { "$ref": "#/$defs/SpineEndpoints" },
+        "edges": {
+          "type": "array",
+          "minItems": 0,
+          "items": { "$ref": "#/$defs/SpineEdge" }
+        },
+        "polyline_points": { "$ref": "#/$defs/FlatVec3ListMaybeEmpty" },
+        "breakpoints": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "description": "Indices into the polyline sample marking spine discontinuities / edge joints."
+        }
+      },
+      "additionalProperties": false
+    },
+    "CommonPoint": {
+      "type": "object",
+      "required": ["label", "tol", "param_spine", "is_vertex", "is_on_arc", "p"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": ["first_on_s1", "last_on_s1", "first_on_s2", "last_on_s2"]
+        },
+        "tol": { "type": "number", "minimum": 0 },
+        "param_spine": { "type": "number" },
+        "is_vertex": { "type": "boolean" },
+        "is_on_arc": { "type": "boolean" },
+        "p": { "$ref": "#/$defs/Vec3" },
+        "arc_transition": { "$ref": "#/$defs/Orientation" },
+        "arc_param": { "type": "number" },
+        "arc_v1": { "$ref": "#/$defs/Vec3" },
+        "arc_v2": { "$ref": "#/$defs/Vec3" }
+      },
+      "additionalProperties": false
+    },
+    "FaceInterference": {
+      "type": "object",
+      "required": [
+        "line_index",
+        "transition",
+        "first",
+        "last",
+        "pcurve_on_face_uv",
+        "pcurve_on_surf_uv",
+        "curve3d_on_face",
+        "curve3d_on_surf"
+      ],
+      "properties": {
+        "line_index": { "type": "integer", "minimum": 0 },
+        "transition": { "$ref": "#/$defs/Orientation" },
+        "first": { "type": "number" },
+        "last": { "type": "number" },
+        "pcurve_on_face_uv": { "$ref": "#/$defs/FlatVec2List" },
+        "pcurve_on_surf_uv": { "$ref": "#/$defs/FlatVec2List" },
+        "curve3d_on_face": { "$ref": "#/$defs/FlatVec3ListMaybeEmpty" },
+        "curve3d_on_surf": { "$ref": "#/$defs/FlatVec3ListMaybeEmpty" }
+      },
+      "additionalProperties": false
+    },
+    "SurfData": {
+      "type": "object",
+      "required": [
+        "index",
+        "ufspine",
+        "ulspine",
+        "IndexOfS1",
+        "IndexOfS2",
+        "Surf",
+        "twistOnS1",
+        "twistOnS2",
+        "commonPoints",
+        "interferences"
+      ],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "ufspine": { "type": "number" },
+        "ulspine": { "type": "number" },
+        "IndexOfS1": { "type": "integer", "minimum": 0 },
+        "IndexOfS2": { "type": "integer", "minimum": -1 },
+        "Surf": { "type": "integer", "minimum": 0 },
+        "twistOnS1": { "type": "boolean" },
+        "twistOnS2": { "type": "boolean" },
+        "commonPoints": {
+          "type": "array",
+          "minItems": 4,
+          "items": { "$ref": "#/$defs/CommonPoint" }
+        },
+        "interferences": {
+          "type": "object",
+          "required": ["on_s1", "on_s2"],
+          "properties": {
+            "on_s1": { "$ref": "#/$defs/FaceInterference" },
+            "on_s2": { "$ref": "#/$defs/FaceInterference" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Stripe": {
+      "type": "object",
+      "required": [
+        "index",
+        "id",
+        "contour_index",
+        "stripe_status",
+        "stripe_status_name",
+        "choix",
+        "spine",
+        "surfData"
+      ],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "contour_index": { "type": "integer", "minimum": -1 },
+        "stripe_status": { "type": "integer", "minimum": -1 },
+        "stripe_status_name": { "type": "string", "minLength": 1 },
+        "choix": { "type": "integer" },
+        "spine": { "$ref": "#/$defs/Spine" },
+        "surfData": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SurfData" },
+          "description": "Sequence of SurfData patches; may be empty for Startsol failures."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SurfaceDecl": {
+      "type": "object",
+      "required": ["index", "type", "tol"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "type": { "type": "string", "minLength": 1 },
+        "tol": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "FaceDecl": {
+      "type": "object",
+      "required": ["index", "type"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "type": { "type": "string", "minLength": 1 },
+        "outer_wire_polyline": {
+          "$ref": "#/$defs/FlatVec3ListMaybeEmpty",
+          "description": "Optional 3D polyline for the face's outer wire (sampling), if exported."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,37 @@
+---
+title: "Draw Sessions"
+tableOfContents: false
+---
+
+import DrawSessionExplorer from '../../../components/DrawSessionExplorer.astro';
+
+This page shows sessions captured from OCCT’s DRAW harness and published into the site.
+
+## Prereq: build `DRAWEXE` (once)
+
+This repo’s default OCCT build disables the Draw module, so build it explicitly:
+
+```bash
+cmake -S occt -B build-occt -G Ninja -DBUILD_MODULE_Draw=ON
+ninja -C build-occt DRAWEXE TKTopTest
+```
+
+## Publish a session
+
+Your `.tcl` script should write `.brep` snapshots into `$env(OCCT_RESEARCH_OUT)`:
+
+```tcl
+pload MODELING
+set out $env(OCCT_RESEARCH_OUT)
+# ... build something into variable `s`
+writebrep s $out/010_after_build.brep
+```
+
+Then run:
+
+```bash
+source build-occt/env.sh i
+./tools/py.sh ./tools/draw_to_site.py --run --tcl path/to/script.tcl --session my-session
+```
+
+<DrawSessionExplorer />

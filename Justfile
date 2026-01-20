@@ -99,6 +99,9 @@ validate-md-strict:
 docs-lint:
 	{{PY}} ./tools/lint_walkthrough_cases.py --root .
 
+fillets-validate:
+	{{PY}} ./tools/validate_fillets_artifacts.py --root .
+
 overview:
 	{{PY}} ./tools/gen_overview_pages.py --root .
 

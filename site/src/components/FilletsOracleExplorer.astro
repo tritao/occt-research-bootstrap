@@ -1,0 +1,122 @@
+---
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+const baseUrl = String(import.meta.env.BASE_URL || '/');
+const basePrefix = baseUrl === '/' ? '' : baseUrl.replace(/\/$/, '');
+const widgetSrc = `${basePrefix}/widgets/filletsOracleExplorer.js`;
+---
+
+<div class="foe not-content" data-foe data-oracle-url={url}>
+  <p class="foe__hint">
+    Pick a case and optionally compare it to another. Data loads from <code>{url}</code>.
+  </p>
+  <div class="foe__controls">
+    <label class="foe__label">
+      <span>Case</span>
+      <select data-foe-primary></select>
+    </label>
+    <label class="foe__label">
+      <span>Compare (optional)</span>
+      <select data-foe-compare></select>
+    </label>
+    <div class="foe__options">
+      <label class="ui-control">
+        <input type="checkbox" data-foe-diff-only />
+        <span>Show differences only</span>
+      </label>
+    </div>
+  </div>
+  <div class="foe__viewer">
+    <div class="foe__viewerBar">
+      <div class="foe__viewerHead">
+        <strong>3D</strong>
+        <span data-foe-viewer-title class="foe__viewerTitle"></span>
+      </div>
+      <div class="foe__viewerControls ui-toolbar">
+        <span class="ui-group">
+          <label class="ui-control">
+            <input type="radio" name="foe-mesh-kind" value="input" data-foe-mesh-kind />
+            <span>Input</span>
+          </label>
+          <label class="ui-control">
+            <input type="radio" name="foe-mesh-kind" value="result" checked data-foe-mesh-kind />
+            <span>Result</span>
+          </label>
+        </span>
+        <span class="ui-sep" aria-hidden="true">·</span>
+        <span class="ui-group">
+          <label class="ui-control">
+            <input type="radio" name="foe-view-target" value="primary" checked data-foe-view-target />
+            <span>Primary</span>
+          </label>
+          <label class="ui-control">
+            <input type="radio" name="foe-view-target" value="compare" data-foe-view-target />
+            <span>Compare</span>
+          </label>
+        </span>
+        <span class="ui-group">
+          <button type="button" class="ui-btn" data-foe-fit>Fit</button>
+          <button type="button" class="ui-btn" data-foe-reset>Reset</button>
+        </span>
+        <span class="ui-group">
+          <label class="ui-control">
+            <input type="checkbox" data-foe-wireframe />
+            <span>Wireframe</span>
+          </label>
+          <label class="ui-control">
+            <input type="checkbox" data-foe-edges checked />
+            <span>Edges</span>
+          </label>
+        </span>
+        <span class="ui-group ui-actions">
+          <a class="ui-link" data-foe-download href="#" download>Download</a>
+          <span data-foe-viewer-status class="foe__viewerStatus"></span>
+        </span>
+      </div>
+    </div>
+    <div data-foe-viewer class="foe__viewerCanvas"></div>
+  </div>
+  <div data-foe-out class="foe__out"></div>
+</div>
+
+<style is:global>
+  .foe__controls { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin: 1rem 0; }
+  @media (min-width: 800px) { .foe__controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; } }
+  .foe__label { min-width: 0; }
+  .foe__label span { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+  .foe__label select { width: 100%; min-width: 0; max-width: 100%; }
+  .foe__options { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
+  @media (max-width: 799px) { .foe__options { justify-content: flex-start; } }
+  .foe__out { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  .foe__card { border: 1px solid var(--sl-color-gray-5); border-radius: 0.5rem; padding: 0.75rem; background: var(--sl-color-black); }
+  .foe__cardHeader { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+  .foe__cardTitle { margin: 0; font-size: 1.05rem; }
+  .foe__cardId { font-family: var(--sl-font-mono); color: var(--sl-color-gray-3); font-size: 0.85rem; }
+  .foe__badges { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .foe__badge { border: 1px solid var(--sl-color-gray-5); border-radius: 999px; padding: 0.15rem 0.5rem; font-size: 0.8rem; }
+  .foe__badge--ok { border-color: rgba(34, 197, 94, 0.5); color: rgba(34, 197, 94, 0.95); }
+  .foe__badge--bad { border-color: rgba(239, 68, 68, 0.55); color: rgba(239, 68, 68, 0.95); }
+  .foe__badge--warn { border-color: rgba(234, 179, 8, 0.55); color: rgba(234, 179, 8, 0.95); }
+  .foe__hint { margin: 0.5rem 0 0; }
+  .foe__viewer { border: 1px solid var(--sl-color-gray-5); border-radius: 0.5rem; padding: 0.75rem; margin: 0 0 1rem; }
+  .foe__viewerBar { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  .foe__viewerHead { display: flex; align-items: baseline; gap: 0.75rem; min-width: 0; flex-wrap: nowrap; }
+  .foe__viewerTitle { color: var(--sl-color-gray-2); font-size: 0.9rem; min-width: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .foe__viewerStatus { color: var(--sl-color-gray-3); font-size: 0.9rem; }
+  .foe__viewerCanvas { width: 100%; height: 360px; }
+  @media (min-width: 900px) { .foe__viewerCanvas { height: 440px; } }
+  table.foe__table { width: 100%; border-collapse: collapse; }
+  table.foe__table th, table.foe__table td { border-bottom: 1px solid var(--sl-color-gray-5); padding: 0.35rem 0.5rem; vertical-align: top; }
+  table.foe__table th { text-align: left; }
+  table.foe__compare th { font-weight: 600; color: var(--sl-color-gray-2); }
+  table.foe__compare td.foe__k { width: 22ch; color: var(--sl-color-gray-2); font-family: var(--sl-font-mono); font-size: 0.9rem; }
+  table.foe__compare td.foe__v { font-family: var(--sl-font-mono); font-size: 0.9rem; }
+  tr.foe__diff td.foe__v { color: var(--sl-color-accent); }
+  details.foe__details { margin-top: 0.75rem; }
+  details.foe__details > summary { cursor: pointer; color: var(--sl-color-gray-2); font-weight: 600; }
+</style>
+
+<script type="module" src={widgetSrc}></script>
