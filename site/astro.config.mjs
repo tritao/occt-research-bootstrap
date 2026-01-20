@@ -70,6 +70,7 @@ export default defineConfig({
 								{ label: 'Overview', slug: 'occt/maps/hub-brep-geometry-bridge' },
 								{ label: 'Lane Map', slug: 'occt/maps/lane-brep-geometry-bridge' },
 								{ label: 'Dossier', slug: 'occt/dossiers/lane-brep-geometry-bridge' },
+								{ label: 'API: BRepAdaptor_Curve::Line()', slug: 'occt/dossiers/api-brepadaptor-curve-line' },
 								{ label: 'Walkthrough', slug: 'occt/walkthroughs/brep-geometry-bridge' },
 								{ label: 'Cases', slug: 'occt/walkthroughs/brep-geometry-bridge-cases' },
 								{ label: 'Repro', slug: 'occt/repros/lane-brep-geometry-bridge/readme' },
