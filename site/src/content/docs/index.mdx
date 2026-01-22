@@ -8,18 +8,18 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 This site is generated from repo docs in `notes/`, `repros/`, and `backlog/docs/` and is meant to be read like “debuggable documentation”: every lane has prose + runnable evidence.
 
 <CardGrid>
-  <LinkCard title="Start: Overview" href="/occt/" description="What lanes are, how to read hubs/maps/dossiers, and the recommended reading order." />
-  <LinkCard title="All lanes" href="/occt/maps/lanes/" description="The lane index (core kernel → booleans → fillets → …)." />
-  <LinkCard title="Walkthroughs" href="/occt/walkthroughs/" description="Repro-driven narratives with Mermaid diagrams and oracle interpretation." />
-  <LinkCard title="Fillets" href="/occt/walkthroughs/fillets/" description="Edge blending pipeline: contours → stripes → corners → stitched result." />
+  <LinkCard title="Start: Overview" href="occt/" description="What lanes are, how to read hubs/maps/dossiers, and the recommended reading order." />
+  <LinkCard title="All lanes" href="occt/maps/lanes/" description="The lane index (core kernel → booleans → fillets → …)." />
+  <LinkCard title="Walkthroughs" href="occt/walkthroughs/" description="Repro-driven narratives with Mermaid diagrams and oracle interpretation." />
+  <LinkCard title="Fillets" href="occt/walkthroughs/fillets/" description="Edge blending pipeline: contours → stripes → corners → stitched result." />
 </CardGrid>
 
 ## How to read this repo
 
-- **Lane hub**: the entry page with links + “10k-ft spine” (`/occt/maps/hub-…/`)
-- **Lane map**: where to look in OCCT source + dependency evidence (`/occt/maps/lane-…/`)
-- **Dossier**: human prose + invariants + key files (`/occt/dossiers/lane-…/`)
-- **Repro**: runnable “oracle” that makes the lane concrete (`/occt/repros/lane-…/readme/`)
+- **Lane hub**: the entry page with links + “10k-ft spine” (`occt/maps/hub-…/`)
+- **Lane map**: where to look in OCCT source + dependency evidence (`occt/maps/lane-…/`)
+- **Dossier**: human prose + invariants + key files (`occt/dossiers/lane-…/`)
+- **Repro**: runnable “oracle” that makes the lane concrete (`occt/repros/lane-…/readme/`)
 
 ## Run locally
 
