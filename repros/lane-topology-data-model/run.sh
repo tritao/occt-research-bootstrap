@@ -5,9 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 REPRO_DIR="$ROOT/repros/lane-topology-data-model"
 
 # build-occt/env.sh assumes unset variables may be referenced; avoid nounset failures.
-set +u
-source "$ROOT/build-occt/env.sh" i
-set -u
+source "$ROOT/tools/occt_env.sh"
 
 mkdir -p "$REPRO_DIR/build" "$REPRO_DIR/golden"
 
@@ -16,9 +14,9 @@ cxx="${CXX:-g++}"
   -I"$CSF_OCCTIncludePath" \
   "$REPRO_DIR/topology_data_model.cpp" \
   -L"$CSF_OCCTLibPath" \
+  -Wl,-rpath,"$CSF_OCCTLibPath" \
   -lTKTopAlgo -lTKBRep -lTKPrim -lTKGeomBase -lTKG3d -lTKG2d -lTKMath -lTKernel \
   -o "$REPRO_DIR/build/topology-data-model"
 
 "$REPRO_DIR/build/topology-data-model" > "$REPRO_DIR/golden/topology-data-model.json"
 echo "wrote $REPRO_DIR/golden/topology-data-model.json"
-

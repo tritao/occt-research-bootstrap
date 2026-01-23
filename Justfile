@@ -102,6 +102,9 @@ docs-lint:
 fillets-validate:
 	{{PY}} ./tools/validate_fillets_artifacts.py --root .
 
+offsets-validate:
+	{{PY}} ./tools/validate_offsets_artifacts.py --root .
+
 overview:
 	{{PY}} ./tools/gen_overview_pages.py --root .
 

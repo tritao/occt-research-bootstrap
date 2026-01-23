@@ -114,9 +114,15 @@ For thick solids (`BRepOffsetAPI_MakeThickSolid`):
 
 ## Runnable repro + oracle outputs (optional, recommended)
 
-If/when needed, add a minimal repro under `repros/lane-offsets/`:
-- Build an offset on a box and a “pathological” test shape.
-- Output: `is_done`, `error`, join type, face counts/types, and `BRepCheck_Analyzer` validity.
+Path: `repros/lane-offsets/README.md`
+
+How to run:
+- `just occt-build`
+- `bash repros/lane-offsets/run.sh`
+
+Oracle outputs:
+- `repros/lane-offsets/golden/offsets.json`
+- `repros/lane-offsets/golden/artifacts/*/model.json` (validated by `tools/validate_offsets_artifacts.py`)
 
 ## Compare to papers / alternatives
 

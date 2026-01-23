@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "occt-research://schemas/offsets_brepoffset_model.schema.json",
+  "title": "OCCT Offsets BRepOffset Model Export (v1)",
+  "type": "object",
+  "required": ["format", "meta", "params", "input", "precheck", "result", "history"],
+  "properties": {
+    "format": {
+      "type": "string",
+      "const": "occt-research-brepoffset-model-v1"
+    },
+    "meta": { "$ref": "#/$defs/Meta" },
+    "params": { "$ref": "#/$defs/Params" },
+    "input": { "$ref": "#/$defs/ShapeStats" },
+    "precheck": { "$ref": "#/$defs/Precheck" },
+    "result": { "$ref": "#/$defs/Result" },
+    "history": { "$ref": "#/$defs/History" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Meta": {
+      "type": "object",
+      "required": ["case", "kind", "occt_version", "occt_dev"],
+      "properties": {
+        "case": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["offset_shape", "thick_solid", "unknown"] },
+        "occt_version": { "type": "string" },
+        "occt_dev": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "BBox": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "$ref": "#/$defs/Vec3" },
+        "max": { "$ref": "#/$defs/Vec3" }
+      },
+      "additionalProperties": false
+    },
+    "ShapeCounts": {
+      "type": "object",
+      "required": ["solids", "shells", "faces", "edges", "vertices"],
+      "properties": {
+        "solids": { "type": "integer", "minimum": 0 },
+        "shells": { "type": "integer", "minimum": 0 },
+        "faces": { "type": "integer", "minimum": 0 },
+        "edges": { "type": "integer", "minimum": 0 },
+        "vertices": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "ShapeStats": {
+      "type": "object",
+      "required": ["counts", "bbox"],
+      "properties": {
+        "counts": { "$ref": "#/$defs/ShapeCounts" },
+        "bbox": { "$ref": "#/$defs/BBox" }
+      },
+      "additionalProperties": false
+    },
+    "BRepOffsetMode": {
+      "type": "string",
+      "enum": ["BRepOffset_Skin", "BRepOffset_Pipe", "BRepOffset_RectoVerso", "UNKNOWN"]
+    },
+    "GeomAbsJoinType": {
+      "type": "string",
+      "enum": ["GeomAbs_Arc", "GeomAbs_Tangent", "GeomAbs_Intersection", "UNKNOWN"]
+    },
+    "BRepOffsetError": {
+      "type": "string",
+      "enum": [
+        "BRepOffset_NoError",
+        "BRepOffset_UnknownError",
+        "BRepOffset_BadNormalsOnGeometry",
+        "BRepOffset_C0Geometry",
+        "BRepOffset_NullOffset",
+        "BRepOffset_NotConnectedShell",
+        "BRepOffset_CannotTrimEdges",
+        "BRepOffset_CannotFuseVertices",
+        "BRepOffset_CannotExtentEdge",
+        "BRepOffset_UserBreak",
+        "BRepOffset_MixedConnectivity",
+        "UNKNOWN"
+      ]
+    },
+    "Params": {
+      "type": "object",
+      "required": ["offset", "tol", "mode", "join_type", "intersection", "self_inter", "remove_internal_edges"],
+      "properties": {
+        "offset": { "type": "number" },
+        "tol": { "type": "number", "minimum": 0 },
+        "mode": { "$ref": "#/$defs/BRepOffsetMode" },
+        "join_type": { "$ref": "#/$defs/GeomAbsJoinType" },
+        "intersection": { "type": "boolean" },
+        "self_inter": { "type": "boolean" },
+        "remove_internal_edges": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "Precheck": {
+      "type": "object",
+      "required": ["ok", "bad_shape"],
+      "properties": {
+        "ok": { "type": "boolean" },
+        "bad_shape": { "anyOf": [{ "$ref": "#/$defs/ShapeStats" }, { "type": "null" }] }
+      },
+      "additionalProperties": false
+    },
+    "Result": {
+      "type": "object",
+      "required": ["is_done", "error_name", "shape"],
+      "properties": {
+        "is_done": { "type": "boolean" },
+        "error_name": { "$ref": "#/$defs/BRepOffsetError" },
+        "shape": { "anyOf": [{ "$ref": "#/$defs/ShapeStats" }, { "type": "null" }] }
+      },
+      "additionalProperties": false
+    },
+    "HistoryItem": {
+      "type": "object",
+      "required": ["input_index", "has_image", "n_images", "n_last_images"],
+      "properties": {
+        "input_index": { "type": "integer", "minimum": 1 },
+        "has_image": { "type": "boolean" },
+        "n_images": { "type": "integer", "minimum": 0 },
+        "n_last_images": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "History": {
+      "type": "object",
+      "required": ["faces", "edges"],
+      "properties": {
+        "faces": { "type": "array", "items": { "$ref": "#/$defs/HistoryItem" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/HistoryItem" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}
+

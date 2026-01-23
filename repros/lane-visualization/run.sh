@@ -5,9 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 REPRO_DIR="$ROOT/repros/lane-visualization"
 
 # build-occt/env.sh assumes unset variables may be referenced; avoid nounset failures.
-set +u
-source "$ROOT/build-occt/env.sh" i
-set -u
+source "$ROOT/tools/occt_env.sh"
 
 mkdir -p "$REPRO_DIR/build" "$REPRO_DIR/golden"
 
@@ -16,9 +14,9 @@ cxx="${CXX:-g++}"
   -I"$CSF_OCCTIncludePath" \
   "$REPRO_DIR/visualization.cpp" \
   -L"$CSF_OCCTLibPath" \
+  -Wl,-rpath,"$CSF_OCCTLibPath" \
   -lTKV3d -lTKMesh -lTKTopAlgo -lTKBRep -lTKPrim -lTKGeomBase -lTKG3d -lTKG2d -lTKMath -lTKernel \
   -o "$REPRO_DIR/build/visualization"
 
 "$REPRO_DIR/build/visualization" > "$REPRO_DIR/golden/visualization.json"
 echo "wrote $REPRO_DIR/golden/visualization.json"
-

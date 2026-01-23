@@ -1,0 +1,30 @@
+{
+  "format": "occt-research-offsets-v1",
+  "meta": {
+    "occt_version": "7.9.3",
+    "occt_dev": ""
+  },
+  "cases": [
+    {
+      "case": "box_offset_arc_1",
+      "kind": "offset_shape",
+      "is_done": true,
+      "error_name": "BRepOffset_NoError",
+      "model": "artifacts/box_offset_arc_1/model.json"
+    },
+    {
+      "case": "box_offset_intersection_1",
+      "kind": "offset_shape",
+      "is_done": true,
+      "error_name": "BRepOffset_NoError",
+      "model": "artifacts/box_offset_intersection_1/model.json"
+    },
+    {
+      "case": "null_offset_0",
+      "kind": "offset_shape",
+      "is_done": false,
+      "error_name": "BRepOffset_NullOffset",
+      "model": "artifacts/null_offset_0/model.json"
+    }
+  ]
+}
