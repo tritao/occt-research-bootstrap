@@ -83,6 +83,7 @@ For thick solids (`BRepOffsetAPI_MakeThickSolid`):
 - `occt/src/GeomAbs/GeomAbs_JoinType.hxx` — join strategy (`Arc`, `Tangent`, `Intersection`)
 - `occt/src/BRepOffsetAPI/BRepOffsetAPI_MakeThickSolid.hxx` — hollow/thick solid façade over `MakeOffsetShape`
 - `occt/src/BRepOffset/BRepOffset_Error.hxx` — error categories used by `BRepOffset_MakeOffset::Error()`
+- Data model deep-dive: [Dossier: BRepOffset Data Model](algorithm-offsets-brepoffset-data-model.md)
 
 2D offsets (planar wire):
 - `occt/src/BRepOffsetAPI/BRepOffsetAPI_MakeOffset.hxx` — planar wire/face offset API (can “approximate” input contours)
